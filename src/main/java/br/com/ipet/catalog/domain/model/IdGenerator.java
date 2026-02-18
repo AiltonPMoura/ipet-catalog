@@ -1,4 +1,4 @@
-package br.com.ipet.catalog.domain.model.util;
+package br.com.ipet.catalog.domain.model;
 
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedEpochRandomGenerator;

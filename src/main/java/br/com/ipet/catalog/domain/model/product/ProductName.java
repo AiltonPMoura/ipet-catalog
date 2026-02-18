@@ -1,7 +1,6 @@
-package br.com.ipet.catalog.domain.model.commons;
+package br.com.ipet.catalog.domain.model.product;
 
-import br.com.ipet.ordering.domain.model.exception.ProductNameCannotBeVerySmall;
-import br.com.ipet.ordering.domain.model.util.FieldValidator;
+import br.com.ipet.catalog.domain.model.FieldValidator;
 
 public record ProductName(String value) {
 

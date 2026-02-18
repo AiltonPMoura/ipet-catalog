@@ -1,13 +1,10 @@
 package br.com.ipet.catalog.domain.model.product;
 
 import br.com.ipet.catalog.domain.model.AggregateRoot;
-import br.com.ipet.catalog.domain.model.commons.CompanyId;
-import br.com.ipet.catalog.domain.model.commons.Money;
-import br.com.ipet.catalog.domain.model.commons.ProductDescription;
-import br.com.ipet.catalog.domain.model.commons.ProductId;
-import br.com.ipet.catalog.domain.model.commons.ProductName;
-import br.com.ipet.catalog.domain.model.commons.Quantity;
-import br.com.ipet.catalog.domain.model.util.FieldValidator;
+import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
+import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
+import br.com.ipet.catalog.domain.model.commons.valueobject.Quantity;
+import br.com.ipet.catalog.domain.model.FieldValidator;
 import lombok.Builder;
 
 public class Product implements AggregateRoot<ProductId> {

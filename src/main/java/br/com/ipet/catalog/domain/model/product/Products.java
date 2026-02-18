@@ -1,8 +1,6 @@
 package br.com.ipet.catalog.domain.model.product;
 
-
 import br.com.ipet.catalog.domain.model.Repository;
-import br.com.ipet.catalog.domain.model.commons.ProductId;
 
 import java.util.Optional;
 

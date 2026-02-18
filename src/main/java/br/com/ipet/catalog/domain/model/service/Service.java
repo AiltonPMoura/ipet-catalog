@@ -1,8 +1,8 @@
 package br.com.ipet.catalog.domain.model.service;
 
-import br.com.ipet.catalog.domain.model.commons.CompanyId;
-import br.com.ipet.catalog.domain.model.commons.Money;
-import br.com.ipet.catalog.domain.model.commons.ServiceId;
+import br.com.ipet.catalog.domain.model.FieldValidator;
+import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
+import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import lombok.Builder;
 
 public class Service {
@@ -27,10 +27,6 @@ public class Service {
 
     void changeType(ServiceType name) {
         this.setServiceType(type);
-    }
-
-    void changeDescription(ServiceDescription description) {
-        FieldValidator.requiresNonNull("service description", description);
     }
 
     void changePrice(Money price) {

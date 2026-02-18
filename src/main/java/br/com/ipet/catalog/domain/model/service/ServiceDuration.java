@@ -1,7 +1,6 @@
-package br.com.ipet.catalog.domain.model.commons;
+package br.com.ipet.catalog.domain.model.service;
 
-
-import br.com.ipet.catalog.domain.model.util.FieldValidator;
+import br.com.ipet.catalog.domain.model.FieldValidator;
 
 public record ServiceDuration(Integer minutes) {
 

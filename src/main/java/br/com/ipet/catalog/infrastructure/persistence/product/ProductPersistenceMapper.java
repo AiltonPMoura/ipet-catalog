@@ -1,7 +1,5 @@
 package br.com.ipet.catalog.infrastructure.persistence.product;
 
-import br.com.ipet.ordering.domain.model.entity.Product;
-import br.com.ipet.ordering.infrastructure.persistence.repository.CompanyPersistenceEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +7,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProductPersistenceMapper {
 
-    private final CompanyPersistenceEntityRepository companyPersistenceEntityRepository;
+    /*private final CompanyPersistenceEntityRepository companyPersistenceEntityRepository;
 
     public ProductPersistenceEntity fromDomain(Product product) {
         return merge(new ProductPersistenceEntity(), product);
@@ -26,6 +24,6 @@ public class ProductPersistenceMapper {
         productPersistenceEntity.setSubCategory(product.subCategory().name());
         productPersistenceEntity.setEnabled(product.enabled());
         return productPersistenceEntity;
-    }
+    }*/
 
 }

@@ -1,9 +1,8 @@
-package br.com.ipet.catalog.domain.model.commons;
+package br.com.ipet.catalog.domain.model.commons.valueobject;
 
-import br.com.ipet.ordering.domain.model.exception.NumberCannotBeNegativeException;
-import br.com.ipet.ordering.domain.model.exception.QuantityGreaterThanZeroException;
-import br.com.ipet.ordering.domain.model.util.FieldValidator;
-import br.com.ipet.ordering.domain.model.valueobject.Quantity;
+import br.com.ipet.catalog.domain.model.FieldValidator;
+import br.com.ipet.catalog.domain.model.commons.exception.NumberCannotBeNegativeException;
+import br.com.ipet.catalog.domain.model.commons.exception.QuantityGreaterThanZeroException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
