@@ -8,11 +8,11 @@ import static br.com.ipet.catalog.domain.model.service.ServiceSubCategory.*;
 
 @RequiredArgsConstructor
 public enum ServiceCategory {
-    DOG(1, "Cachorro", List.of(DOG_HYGIENE, DOG_HEALTH, DOG_DAYCARE, DOG_HOSTING)),
+    DOG(1, "Cão", List.of(DOG_HYGIENE, DOG_HEALTH, DOG_DAYCARE, DOG_HOSTING)),
     CAT(2, "Gato", List.of(CAT_HYGIENE, CAR_HEALTH));
 
     public String nameValue() {
-        return this.nameValue;
+        return this.description;
     }
 
     public Integer id() {
@@ -20,7 +20,7 @@ public enum ServiceCategory {
     }
 
     private final Integer id;
-    private final String nameValue;
+    private final String description;
     private final List<ServiceSubCategory> subCategories;
 
     public List<ServiceSubCategory> subCategories() {
