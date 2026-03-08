@@ -38,7 +38,7 @@ public class ProductPersistenceProvider implements Products {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return 0;
     }
 }

@@ -4,36 +4,35 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static br.com.ipet.catalog.domain.model.service.ServiceCategory.CAT;
-import static br.com.ipet.catalog.domain.model.service.ServiceCategory.DOG;
-import static br.com.ipet.catalog.domain.model.service.ServiceType.BATH_GROOMING_CLIPPERS;
-import static br.com.ipet.catalog.domain.model.service.ServiceType.BATH_GROOMING_SCISSOR;
+import static br.com.ipet.catalog.domain.model.service.ServiceCategory.*;
+import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_BATH_GROOMING_CLIPPERS;
+import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_BATH_GROOMING_SCISSOR;
+import static br.com.ipet.catalog.domain.model.service.ServiceType.CAT_BATH;
 import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_BATH;
 import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_RABIES_VACCINE;
 
 @RequiredArgsConstructor
 public enum ServiceSubCategory {
-    DOG_HYGIENE("Higienização para cães", List.of(DOG_BATH, BATH_GROOMING_SCISSOR, BATH_GROOMING_CLIPPERS), DOG),
-    DOG_HEALTH("Saúde para cães", List.of(DOG_RABIES_VACCINE), DOG),
-    DOG_DAYCARE("Creche para cães", List.of(), DOG),
-    DOG_HOSTING("Hospedagem para cães", List.of(), DOG),
+    DOG_HYGIENE(1, "Higienização para Cães", List.of(DOG_BATH, DOG_BATH_GROOMING_SCISSOR, DOG_BATH_GROOMING_CLIPPERS), HYGIENE),
+    DOG_HEALTH(2, "Saúde para Cães", List.of(DOG_RABIES_VACCINE), HEALTH),
 
-    CAT_HYGIENE("Higienização para gatos", List.of(), CAT),
-    CAR_HEALTH("Saúde para gatos", List.of(), CAT);
+    CAT_HIGIENE(2, "Higienização para Gatos", List.of(CAT_BATH), HYGIENE);
 
+    private final Integer id;
     private final String description;
     private final List<ServiceType> serviceTypes;
-    private final ServiceCategory subCategorie;
+    private final ServiceCategory category;
 
+    public Integer id() {
+        return this.id;
+    }
     public String description() {
-        return description;
+        return this.description;
     }
-
-    public List<ServiceType> serviceTypes() {
-        return serviceTypes;
+    public List<ServiceType> subCategories() {
+        return this.serviceTypes;
     }
-
-    public ServiceCategory subCategorie() {
-        return subCategorie;
+    public ServiceCategory category() {
+        return  this.category;
     }
 }

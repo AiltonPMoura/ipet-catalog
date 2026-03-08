@@ -15,4 +15,8 @@ public record ServiceId(UUID value) {
         FieldValidator.requiresNonNull("serviceId value", value);
     }
 
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

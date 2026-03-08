@@ -1,36 +1,53 @@
 package br.com.ipet.catalog.domain.model.service;
 
+import br.com.ipet.catalog.domain.model.AggregateRoot;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import lombok.Builder;
 
-public class Service {
+import java.util.Objects;
+
+public class Service implements AggregateRoot<ServiceId> {
     private ServiceId id;
     private CompanyId companyId;
     private ServiceType type;
+    private PetSize petSize;
     private Money price;
-    private ServiceDuration duration;
+    private ServiceTime time;
 
     @Builder(builderClassName = "CreateNewServiceBuilder", builderMethodName = "createNew")
-    private static Service create(CompanyId companyId, ServiceType name, Money price) {
-        return new Service(new ServiceId(), companyId, name, price);
+    private static Service create(CompanyId companyId, ServiceType type,
+                                  PetSize petSize, Money price, ServiceTime time) {
+        return new Service(new ServiceId(), companyId, type, petSize, price, time);
     }
 
     @Builder(builderClassName = "ExistingServiceBuilder", builderMethodName = "existing")
-    private Service(ServiceId id, CompanyId companyId, ServiceType type, Money price) {
+    private Service(ServiceId id, CompanyId companyId, ServiceType type,
+                    PetSize petSize, Money price, ServiceTime time) {
         this.setId(id);
         this.setCompanyId(companyId);
-        this.setServiceType(type);
+        this.setType(type);
+        this.setPetSize(petSize);
         this.setPrice(price);
+        this.setTime(time);
     }
 
-    void changeType(ServiceType name) {
-        this.setServiceType(type);
+    void changeType(ServiceType type) {
+        this.setType(type);
     }
 
     void changePrice(Money price) {
         this.setPrice(price);
+    }
+
+    void changePetSize(PetSize petSize) {
+        this.setPetSize(petSize);
+    }
+
+    void changeServiceTime(ServiceTime time) {
+        FieldValidator.requiresNonNull("time", time);
+        this.setTime(time);
     }
 
     public ServiceId id() {
@@ -45,8 +62,16 @@ public class Service {
         return type;
     }
 
+    public PetSize petSize() {
+        return petSize;
+    }
+
     public Money price() {
         return price;
+    }
+
+    public ServiceTime time() {
+        return time;
     }
 
     private void setId(ServiceId id) {
@@ -59,13 +84,33 @@ public class Service {
         this.companyId = companyId;
     }
 
-    private void setServiceType(ServiceType type) {
-        FieldValidator.requiresNonNull("service type", type);
+    public void setType(ServiceType type) {
+        FieldValidator.requiresNonNull("type", type);
         this.type = type;
     }
 
+    public void setPetSize(PetSize petSize) {
+        FieldValidator.requiresNonNull("petSize", petSize);
+        this.petSize = petSize;
+    }
+
     private void setPrice(Money price) {
-        FieldValidator.requiresNonNull("service price", price);
+        FieldValidator.requiresNonNull("price", price);
         this.price = price;
+    }
+
+    private void setTime(ServiceTime time) {
+        this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Service service)) return false;
+        return Objects.equals(id, service.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

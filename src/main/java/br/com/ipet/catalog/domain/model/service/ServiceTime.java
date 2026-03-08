@@ -2,12 +2,14 @@ package br.com.ipet.catalog.domain.model.service;
 
 import br.com.ipet.catalog.domain.model.FieldValidator;
 
-public record ServiceDuration(Integer minutes) {
+import java.time.OffsetTime;
 
-    public ServiceDuration {
-        FieldValidator.requiresNonNull("minutes", minutes);
+public record ServiceTime(OffsetTime value) {
 
-        if (minutes % 15 > 0)
+    public ServiceTime {
+        FieldValidator.requiresNonNull("value", value);
+
+        if (value.getMinute() % 15 > 0)
             throw new RuntimeException("Minutos precisa ser múltiplos de 15");
     }
 
