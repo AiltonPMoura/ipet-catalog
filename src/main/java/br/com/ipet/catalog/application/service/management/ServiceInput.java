@@ -1,31 +1,26 @@
-package br.com.ipet.catalog.infrastructure.persistence.service;
+package br.com.ipet.catalog.application.service.management;
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.time.OffsetTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(of = "id")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Document(value = "service")
-public class ServicePersistenceEntity {
+public class ServiceInput {
 
-    private UUID id;
     private CompanyId companyId;
     private String name;
     private String description;
     private String size;
+    private String type;
     private BigDecimal price;
+    private OffsetTime time;
 
 }

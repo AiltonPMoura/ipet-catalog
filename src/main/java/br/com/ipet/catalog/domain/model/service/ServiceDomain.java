@@ -26,11 +26,8 @@ public class ServiceDomain {
 
     }
 
-    public Service change(ServiceId id, CompanyId companyId, ServiceType type,
-                          PetSize petSize, Money price, ServiceTime time) {
-        var service = services.ofId(id)
-                .orElseThrow(() -> new ServiceNotFoundException(id.toString()));
-
+    public void change(Service service, CompanyId companyId, ServiceType type,
+                       PetSize petSize, Money price, ServiceTime time) {
         verifyIfBelongsToTheCompany(companyId, service);
         verifyServiceRequireTime(type, time);
 
@@ -38,8 +35,6 @@ public class ServiceDomain {
         service.changeServiceTime(time);
         service.changePetSize(petSize);
         service.changePrice(price);
-
-        return service;
     }
 
     private void verifyIfBelongsToTheCompany(CompanyId companyId, Service service) {
