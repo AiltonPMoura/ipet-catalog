@@ -46,11 +46,11 @@ public class ServiceDomain {
             throw new ServiceDoesNotBelongToTheCompany();
     }
 
-    private void verifyServiceRequireTime(ServiceType type, ServiceTime time) {
-        var serviceCategory = type.category();
+    private void verifyServiceRequireTime(ServiceType serviceType, ServiceTime time) {
+        var serviceSubcategory = serviceType.subCategory();
         var isServiceTime = time == null &&
-                (ServiceCategory.HEALTH.equals(serviceCategory)
-                        || ServiceCategory.HYGIENE.equals(serviceCategory));
+                (ServiceSubCategory.DOG_HYGIENE.equals(serviceSubcategory)
+                        || ServiceSubCategory.DOG_HEALTH.equals(serviceSubcategory));
 
         if (isServiceTime)
             throw new TimeCannotBeNullException("Tempo é requerido para este tipo de serviço");
