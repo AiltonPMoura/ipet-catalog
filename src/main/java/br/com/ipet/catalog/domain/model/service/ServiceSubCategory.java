@@ -13,19 +13,18 @@ import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_RABIES_VA
 
 @RequiredArgsConstructor
 public enum ServiceSubCategory {
-    DOG_HYGIENE(1, "Higienização para Cães", List.of(DOG_BATH, DOG_BATH_GROOMING_SCISSOR, DOG_BATH_GROOMING_CLIPPERS), HYGIENE),
-    DOG_HEALTH(2, "Saúde para Cães", List.of(DOG_RABIES_VACCINE), HEALTH),
+    DOG_HYGIENE("Higienização para Cães", List.of(DOG_BATH, DOG_BATH_GROOMING_SCISSOR, DOG_BATH_GROOMING_CLIPPERS), DOG),
+    DOG_HEALTH("Saúde para Cães", List.of(DOG_RABIES_VACCINE), DOG),
+    DOG_DAYCARE("Creche para cães", List.of(), DOG),
+    DOG_HOSTING("Hospedagem para cães", List.of(), DOG),
 
-    CAT_HIGIENE(2, "Higienização para Gatos", List.of(CAT_BATH), HYGIENE);
+    CAT_HIGIENE("Higienização para Gatos", List.of(CAT_BATH), CAT),
+    CAT_HEALTH("Saúde para Cães", List.of(), DOG);
 
-    private final Integer id;
     private final String description;
     private final List<ServiceType> serviceTypes;
     private final ServiceCategory category;
 
-    public Integer id() {
-        return this.id;
-    }
     public String description() {
         return this.description;
     }

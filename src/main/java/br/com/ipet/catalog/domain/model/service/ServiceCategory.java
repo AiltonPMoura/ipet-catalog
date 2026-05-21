@@ -4,16 +4,17 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import static br.com.ipet.catalog.domain.model.service.ServiceSubCategory.CAT_HEALTH;
 import static br.com.ipet.catalog.domain.model.service.ServiceSubCategory.CAT_HIGIENE;
+import static br.com.ipet.catalog.domain.model.service.ServiceSubCategory.DOG_DAYCARE;
 import static br.com.ipet.catalog.domain.model.service.ServiceSubCategory.DOG_HEALTH;
+import static br.com.ipet.catalog.domain.model.service.ServiceSubCategory.DOG_HOSTING;
 import static br.com.ipet.catalog.domain.model.service.ServiceSubCategory.DOG_HYGIENE;
 
 @RequiredArgsConstructor
 public enum ServiceCategory {
-    HYGIENE("Higienização", List.of(DOG_HYGIENE, CAT_HIGIENE)),
-    HEALTH("Saúde", List.of(DOG_HEALTH)),
-    DAYCARE("Creche", List.of()),
-    HOSTING("Hospedagem", List.of());
+    DOG("Cachorro", List.of(DOG_HYGIENE, DOG_HEALTH, DOG_DAYCARE, DOG_HOSTING)),
+    CAT("Gato", List.of(CAT_HIGIENE, CAT_HEALTH));
 
     private final String description;
     private final List<ServiceSubCategory> subCategories;
