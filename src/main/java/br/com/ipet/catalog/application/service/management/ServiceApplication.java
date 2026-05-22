@@ -4,11 +4,11 @@ import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import br.com.ipet.catalog.domain.model.service.PetSize;
+import br.com.ipet.catalog.domain.model.service.ServiceCategory;
 import br.com.ipet.catalog.domain.model.service.ServiceDomain;
 import br.com.ipet.catalog.domain.model.service.ServiceId;
 import br.com.ipet.catalog.domain.model.service.ServiceNotFoundException;
 import br.com.ipet.catalog.domain.model.service.ServiceTime;
-import br.com.ipet.catalog.domain.model.service.ServiceType;
 import br.com.ipet.catalog.domain.model.service.Services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class ServiceApplication {
 
         var service = this.serviceDomain.generate(
                 input.getCompanyId(),
-                ServiceType.valueOf(input.getType()),
+                ServiceCategory.valueOf(input.getType()),
                 PetSize.valueOf(input.getSize()),
                 new Money(input.getPrice()),
                 new ServiceTime(input.getTime())
@@ -45,7 +45,7 @@ public class ServiceApplication {
                 .orElseThrow(() -> new ServiceNotFoundException(serviceId.toString()));
 
         serviceDomain.change(service, new CompanyId(companyId),
-                ServiceType.valueOf(input.getType()),
+                ServiceCategory.valueOf(input.getType()),
                 PetSize.valueOf(input.getSize()),
                 new Money(input.getPrice()),
                 new ServiceTime(input.getTime()));

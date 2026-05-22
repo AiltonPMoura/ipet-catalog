@@ -11,14 +11,14 @@ public class ServiceDomain {
 
     private final Services services;
 
-    public Service generate(CompanyId companyId, ServiceType type,
+    public Service generate(CompanyId companyId, ServiceCategory category,
                             PetSize petSize, Money price, ServiceTime time) {
 
-        verifyServiceRequireTime(type, time);
+        verifyServiceRequireTime(category, time);
 
         return Service.createNew()
                 .companyId(companyId)
-                .type(type)
+                .category(category)
                 .petSize(petSize)
                 .price(price)
                 .time(time)
@@ -26,12 +26,12 @@ public class ServiceDomain {
 
     }
 
-    public void change(Service service, CompanyId companyId, ServiceType type,
+    public void change(Service service, CompanyId companyId, ServiceCategory category,
                        PetSize petSize, Money price, ServiceTime time) {
         verifyIfBelongsToTheCompany(companyId, service);
-        verifyServiceRequireTime(type, time);
+        verifyServiceRequireTime(category, time);
 
-        service.changeType(type);
+        service.changeCategory(category);
         service.changeServiceTime(time);
         service.changePetSize(petSize);
         service.changePrice(price);
@@ -46,11 +46,10 @@ public class ServiceDomain {
             throw new ServiceDoesNotBelongToTheCompany();
     }
 
-    private void verifyServiceRequireTime(ServiceType serviceType, ServiceTime time) {
-        var serviceSubcategory = serviceType.subCategory();
+    private void verifyServiceRequireTime(ServiceCategory category, ServiceTime time) {
         var isServiceTime = time == null &&
-                (ServiceSubCategory.DOG_HYGIENE.equals(serviceSubcategory)
-                        || ServiceSubCategory.DOG_HEALTH.equals(serviceSubcategory));
+                (ServiceCategory.HIGYENE.equals(category)
+                        || ServiceCategory.HEALTH.equals(category));
 
         if (isServiceTime)
             throw new TimeCannotBeNullException("Tempo é requerido para este tipo de serviço");

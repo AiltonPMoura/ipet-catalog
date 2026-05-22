@@ -1,37 +1,21 @@
 package br.com.ipet.catalog.domain.model.service;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
-import static br.com.ipet.catalog.domain.model.service.ServiceCategory.*;
-import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_BATH_GROOMING_CLIPPERS;
-import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_BATH_GROOMING_SCISSOR;
-import static br.com.ipet.catalog.domain.model.service.ServiceType.CAT_BATH;
-import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_BATH;
-import static br.com.ipet.catalog.domain.model.service.ServiceType.DOG_RABIES_VACCINE;
-
 @RequiredArgsConstructor
+@Getter
 public enum ServiceSubCategory {
-    DOG_HYGIENE("Higienização para Cães", List.of(DOG_BATH, DOG_BATH_GROOMING_SCISSOR, DOG_BATH_GROOMING_CLIPPERS), DOG),
-    DOG_HEALTH("Saúde para Cães", List.of(DOG_RABIES_VACCINE), DOG),
-    DOG_DAYCARE("Creche para cães", List.of(), DOG),
-    DOG_HOSTING("Hospedagem para cães", List.of(), DOG),
+    DOG_BATH("Higienização completa para Cães"),
+    DOG_BATH_GROOMING_SCISSOR("Higienização completa para Cães e corte na tesoura"),
+    DOG_BATH_GROOMING_CLIPPERS("Higienização completa para Cães e corte com máquina"),
+    DOG_RABIES_VACCINE("Vácina contra raiva para Cães"),
+    DOG_DAYCARE("Creche para cães"),
+    DOG_HOSTING("Hospedagem para cães"),
 
-    CAT_HIGIENE("Higienização para Gatos", List.of(CAT_BATH), CAT),
-    CAT_HEALTH("Saúde para Cães", List.of(), DOG);
+    CAT_RABIES_VACCINE("Vácina contra raiva para Gatos"),
+    CAT_DAYCARE("Creche para gatos"),
+    CAT_HOSTING("Hospedagem para gatos");
 
     private final String description;
-    private final List<ServiceType> serviceTypes;
-    private final ServiceCategory category;
-
-    public String description() {
-        return this.description;
-    }
-    public List<ServiceType> subCategories() {
-        return this.serviceTypes;
-    }
-    public ServiceCategory category() {
-        return  this.category;
-    }
 }

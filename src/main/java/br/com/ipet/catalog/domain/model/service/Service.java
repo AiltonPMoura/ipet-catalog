@@ -11,30 +11,30 @@ import java.util.Objects;
 public class Service implements AggregateRoot<ServiceId> {
     private ServiceId id;
     private CompanyId companyId;
-    private ServiceType type;
+    private ServiceCategory category;
     private PetSize petSize;
     private Money price;
     private ServiceTime time;
 
     @Builder(builderClassName = "CreateNewServiceBuilder", builderMethodName = "createNew")
-    private static Service create(CompanyId companyId, ServiceType type,
+    private static Service create(CompanyId companyId, ServiceCategory category,
                                   PetSize petSize, Money price, ServiceTime time) {
-        return new Service(new ServiceId(), companyId, type, petSize, price, time);
+        return new Service(new ServiceId(), companyId, category, petSize, price, time);
     }
 
     @Builder(builderClassName = "ExistingServiceBuilder", builderMethodName = "existing")
-    private Service(ServiceId id, CompanyId companyId, ServiceType type,
+    private Service(ServiceId id, CompanyId companyId, ServiceCategory category,
                     PetSize petSize, Money price, ServiceTime time) {
         this.setId(id);
         this.setCompanyId(companyId);
-        this.setType(type);
+        this.setCategory(category);
         this.setPetSize(petSize);
         this.setPrice(price);
         this.setTime(time);
     }
 
-    void changeType(ServiceType type) {
-        this.setType(type);
+    void changeCategory(ServiceCategory category) {
+        this.setCategory(category);
     }
 
     void changePrice(Money price) {
@@ -58,8 +58,8 @@ public class Service implements AggregateRoot<ServiceId> {
         return companyId;
     }
 
-    public ServiceType type() {
-        return type;
+    public ServiceCategory category() {
+        return category;
     }
 
     public PetSize petSize() {
@@ -84,9 +84,9 @@ public class Service implements AggregateRoot<ServiceId> {
         this.companyId = companyId;
     }
 
-    public void setType(ServiceType type) {
-        FieldValidator.requiresNonNull("type", type);
-        this.type = type;
+    public void setCategory(ServiceCategory category) {
+        FieldValidator.requiresNonNull("category", category);
+        this.category = category;
     }
 
     public void setPetSize(PetSize petSize) {
