@@ -8,7 +8,7 @@ import lombok.Builder;
 
 import java.util.Set;
 
-public class TimeSlotService
+public class TimeSlot
         extends Service
         implements AggregateRoot<ServiceId> {
 
@@ -20,17 +20,17 @@ public class TimeSlotService
             ServiceCategory.HIGYENE, ServiceCategory.HEALTH, ServiceCategory.DAYCARE);
 
     @Builder(builderClassName = "CreateTimeSlotServiceBuilder", builderMethodName = "create")
-    private static TimeSlotService create(CompanyId companyId, ServiceCategory category,
-                                     PetSize petSize, Money price, TimeSlotDuration duration) {
+    private static TimeSlot create(CompanyId companyId, ServiceCategory category,
+                                   PetSize petSize, Money price, TimeSlotDuration duration) {
         if (!SUPPORTS_CATEGORIES.contains(category))
             throw new UnsupportedServiceCategoryException(category.getDescription());
 
-        return new TimeSlotService(new ServiceId(), companyId, category, petSize, price, duration);
+        return new TimeSlot(new ServiceId(), companyId, category, petSize, price, duration);
     }
 
     @Builder(builderClassName = "ExistingTimeSlotServiceBuilder", builderMethodName = "existing")
-    public TimeSlotService(ServiceId id, CompanyId companyId, ServiceCategory category,
-                                   PetSize petSize, Money price, TimeSlotDuration duration) {
+    public TimeSlot(ServiceId id, CompanyId companyId, ServiceCategory category,
+                    PetSize petSize, Money price, TimeSlotDuration duration) {
         super(id, companyId, category);
         this.setPetSize(petSize);
         this.setPrice(price);
