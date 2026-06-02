@@ -1,8 +1,10 @@
 package br.com.ipet.catalog.domain.model;
 
 import br.com.ipet.catalog.domain.model.commons.exception.FieldCannotBeEmptyException;
+import br.com.ipet.catalog.domain.model.service.StartTimeMustBeBeforeEndTimeException;
 import org.springframework.util.StringUtils;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
 
 public class FieldValidator {
@@ -24,6 +26,11 @@ public class FieldValidator {
 
         if (value.isEmpty())
             throw new FieldCannotBeEmptyException(field);
+    }
+
+    public static void requireStartDateTimeIsBeforeEndTime(OffsetDateTime startDateTime, OffsetDateTime endDateTime) {
+        if (!startDateTime.isBefore(endDateTime))
+            throw new StartTimeMustBeBeforeEndTimeException(startDateTime.toString(), endDateTime.toString());
     }
 
 }

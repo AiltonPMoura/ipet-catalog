@@ -1,4 +1,4 @@
-package br.com.ipet.catalog.domain.model.commons.exception;
+package br.com.ipet.catalog.domain.model.product;
 
 
 import br.com.ipet.catalog.domain.model.DomainException;
