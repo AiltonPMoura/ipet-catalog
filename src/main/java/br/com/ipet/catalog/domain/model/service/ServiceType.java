@@ -3,55 +3,37 @@ package br.com.ipet.catalog.domain.model.service;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Set;
+
 @Getter
 @RequiredArgsConstructor
 public enum ServiceType {
-    BATH("Higienização completa"),
-    GROOMING_SCISSOR("Higienização completa e corte na tesoura"),
-    GROOMING_CLIPPERS("Higienização completa e corte com máquina"),
+    BATH("Higienização completa", ServiceCategory.HIGYENE, Set.of(Species.GOG, Species.CAT)),
+    GROOMING_SCISSOR("Higienização completa e corte na tesoura", ServiceCategory.HIGYENE, Set.of(Species.GOG)),
+    GROOMING_CLIPPERS("Higienização completa e corte com máquina", ServiceCategory.HIGYENE, Set.of(Species.GOG)),
 
-    RABIES_VACCINE("Vácina contra raiva");
+    STANDARD_HOTEL("Hospedagem comum", ServiceCategory.ACCOMMODATION, Set.of(Species.GOG, Species.CAT)),
+    VIP_HOTEL("Hospedagem VIP", ServiceCategory.ACCOMMODATION, Set.of(Species.GOG, Species.CAT)),
+    IN_HOME_BOARDING("Hospedagem domiciliar", ServiceCategory.ACCOMMODATION, Set.of(Species.GOG, Species.CAT)),
+
+    STANDARD_DAYCARE("Creche comum", ServiceCategory.DAILY_CARE, Set.of(Species.GOG, Species.CAT)),
+    VIP_DAYCARE("Creche VIP", ServiceCategory.DAILY_CARE, Set.of(Species.GOG, Species.CAT)),
+    DOG_WALKING("Passeio para cães", ServiceCategory.DAILY_CARE, Set.of(Species.GOG)),
+    DROP_IN_VISIT("Visita rápida", ServiceCategory.DAILY_CARE, Set.of(Species.GOG, Species.CAT)),
+    TRAINING("Treinamento", ServiceCategory.DAILY_CARE, Set.of(Species.GOG)),
+    PLAY_SESSION("Sessão de brincadeiras", ServiceCategory.DAILY_CARE, Set.of(Species.GOG)),
+
+    VETERINARY_CONSULTATION("Consulta veterinária", ServiceCategory.HEALTH, Set.of(Species.GOG, Species.CAT, Species.BIRD, Species.HORSE, Species.HAMSTER, Species.RABBIT));
 
     private final String description;
-    /*private ServiceTypeId id;
-    private String name;
-    private ServiceSubCategoryId subCategoryId;
+    private final ServiceCategory category;
+    private final Set<Species> supportedSpecies;
 
-    static ServiceType create(ServiceSubCategoryId subCategoryId, String name) {
-        return new ServiceType(new ServiceTypeId(), subCategoryId, name);
+    public boolean supportsSpecies(Species species) {
+        return this.supportedSpecies.contains(species);
     }
 
-    @Builder(builderClassName = "ExistingServiceTypeBuilder", builderMethodName = "existing")
-    public ServiceType(ServiceTypeId id, ServiceSubCategoryId subCategoryId, String name) {
-        this.setId(id);
-        this.setName(name);
-        this.setSubCategoryId(subCategoryId);
+    public boolean dontSupportsSpecies(Species species) {
+        return !this.supportsSpecies(species);
     }
-
-    public ServiceTypeId id() {
-        return id;
-    }
-
-    private void setId(ServiceTypeId id) {
-        FieldValidator.requiresNonNull("id", id);
-        this.id = id;
-    }
-
-    public String name() {
-        return name;
-    }
-
-    private void setName(String name) {
-        FieldValidator.requiresNonNull("name", name);
-        this.name = name;
-    }
-
-    public ServiceSubCategoryId subCategoryId() {
-        return subCategoryId;
-    }
-
-    private void setSubCategoryId(ServiceSubCategoryId subCategoryId) {
-        FieldValidator.requiresNonNull("subCategoryId", subCategoryId);
-        this.subCategoryId = subCategoryId;
-    }*/
 }
