@@ -33,7 +33,7 @@ public enum ServiceType {
         return this.supportedSpecies.contains(species);
     }
 
-    public boolean dontSupportsSpecies(Species species) {
+    public boolean doesNotSupportsSpecies(Species species) {
         return !this.supportsSpecies(species);
     }
 }

@@ -2,12 +2,12 @@ package br.com.ipet.catalog.domain.model.service;
 
 import br.com.ipet.catalog.domain.model.FieldValidator;
 
-public record Duration(Integer minutes) {
+public record TimeSlot(Integer minutes) {
 
     private static final int MINIMUM_DURATION_MINUTES = 30;
     private static final int DURATION_INTERVAL_MINUTES = 15;
 
-    public Duration {
+    public TimeSlot {
         FieldValidator.requiresNonNull("duration", minutes);
 
         if (minutes < MINIMUM_DURATION_MINUTES)

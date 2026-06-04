@@ -9,12 +9,17 @@ import java.util.Objects;
 public abstract class Service extends AbstractEventSourceEntity {
     private ServiceId id;
     private CompanyId companyId;
-    private ServiceCategory category;
+    private ServiceType type;
+    private Species species;
 
-    protected Service(ServiceId id, CompanyId companyId, ServiceCategory category) {
+    protected Service(ServiceId id, CompanyId companyId, ServiceType type, Species species) {
+        if (type.doesNotSupportsSpecies(species))
+            throw new ServiceTypeDoesNotSupportSpeciesException(type.name(), species.name());
+
         this.setId(id);
         this.setCompanyId(companyId);
-        this.setCategory(category);
+        this.setType(type);
+        this.setSpecies(species);
     }
 
     public ServiceId id() {
@@ -35,13 +40,22 @@ public abstract class Service extends AbstractEventSourceEntity {
         this.companyId = companyId;
     }
 
-    public ServiceCategory category() {
-        return category;
+    public ServiceType type() {
+        return type;
     }
 
-    private void setCategory(ServiceCategory category) {
-        FieldValidator.requiresNonNull("category", category);
-        this.category = category;
+    private void setType(ServiceType type) {
+        FieldValidator.requiresNonNull("type", type);
+        this.type = type;
+    }
+
+    public Species species() {
+        return species;
+    }
+
+    private void setSpecies(Species species) {
+        FieldValidator.requiresNonNull("species", species);
+        this.species = species;
     }
 
     @Override
