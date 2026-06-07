@@ -21,7 +21,7 @@ public class Activity extends Service
             throw new UnsupportedServiceCategoryException(type.category().name());
 
         if (timeSlot.duration().toMinutes() > 720)
-            throw new ServiceTimeCannotBeGreaterThanTwoHoursException(String.valueOf(timeSlot.duration().toMinutes()));
+            throw new ServiceTimeCannotBeGreaterThanAvaliableTimeException(String.valueOf(timeSlot.duration().toMinutes()));
 
         return new Activity(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
     }
