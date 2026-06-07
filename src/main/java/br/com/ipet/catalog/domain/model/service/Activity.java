@@ -6,32 +6,29 @@ import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import lombok.Builder;
 
-import java.time.Duration;
-import java.time.LocalTime;
-
-public class Hygiene extends Service
+public class Activity extends Service
         implements Appointment, AggregateRoot<ServiceId> {
 
     private PetSize petSize;
     private TimeSlot timeSlot;
     private Money price;
 
-    @Builder(builderClassName = "CreateHygieneServiceBuilder", builderMethodName = "create")
-    private static Hygiene create(CompanyId companyId, ServiceType type, Species species,
-                                  PetSize petSize, Money price, TimeSlot timeSlot) {
+    @Builder(builderClassName = "CreateActivityServiceBuilder", builderMethodName = "create")
+    private static Activity create(CompanyId companyId, ServiceType type, Species species,
+                                   PetSize petSize, Money price, TimeSlot timeSlot) {
 
-        if (type.category() != ServiceCategory.HIGYENE)
+        if (type.category() != ServiceCategory.ACTIVITY)
             throw new UnsupportedServiceCategoryException(type.category().name());
 
-        if (timeSlot.duration().toMinutes() > 240)
-            throw new ServiceCannotBeGreaterThanFourHoursException(String.valueOf(timeSlot.duration().toMinutes()));
+        if (timeSlot.duration().toMinutes() > 720)
+            throw new ServiceTimeCannotBeGreaterThanTwoHoursException(String.valueOf(timeSlot.duration().toMinutes()));
 
-        return new Hygiene(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
+        return new Activity(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
     }
 
-    @Builder(builderClassName = "ExistingHygieneServiceBuilder", builderMethodName = "existing")
-    public Hygiene(ServiceId id, CompanyId companyId, ServiceType type, Species species,
-                   PetSize petSize, Money price, TimeSlot timeSlot) {
+    @Builder(builderClassName = "ExistingActivityServiceBuilder", builderMethodName = "existing")
+    public Activity(ServiceId id, CompanyId companyId, ServiceType type, Species species,
+                    PetSize petSize, Money price, TimeSlot timeSlot) {
         super(id, companyId, type, species);
         this.setPetSize(petSize);
         this.setPrice(price);

@@ -6,32 +6,29 @@ import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import lombok.Builder;
 
-import java.time.Duration;
-import java.time.LocalTime;
-
-public class Hygiene extends Service
+public class Health extends Service
         implements Appointment, AggregateRoot<ServiceId> {
 
     private PetSize petSize;
     private TimeSlot timeSlot;
     private Money price;
 
-    @Builder(builderClassName = "CreateHygieneServiceBuilder", builderMethodName = "create")
-    private static Hygiene create(CompanyId companyId, ServiceType type, Species species,
-                                  PetSize petSize, Money price, TimeSlot timeSlot) {
+    @Builder(builderClassName = "CreateHealthServiceBuilder", builderMethodName = "create")
+    private static Health create(CompanyId companyId, ServiceType type, Species species,
+                                 PetSize petSize, Money price, TimeSlot timeSlot) {
 
-        if (type.category() != ServiceCategory.HIGYENE)
+        if (type.category() != ServiceCategory.HEALTH)
             throw new UnsupportedServiceCategoryException(type.category().name());
 
-        if (timeSlot.duration().toMinutes() > 240)
-            throw new ServiceCannotBeGreaterThanFourHoursException(String.valueOf(timeSlot.duration().toMinutes()));
+        if (timeSlot.duration().toMinutes() > 180)
+            throw new ServiceTimeCannotBeGreaterThanThreeHoursException(String.valueOf(timeSlot.duration().toMinutes()));
 
-        return new Hygiene(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
+        return new Health(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
     }
 
-    @Builder(builderClassName = "ExistingHygieneServiceBuilder", builderMethodName = "existing")
-    public Hygiene(ServiceId id, CompanyId companyId, ServiceType type, Species species,
-                   PetSize petSize, Money price, TimeSlot timeSlot) {
+    @Builder(builderClassName = "ExistingHealthServiceBuilder", builderMethodName = "existing")
+    public Health(ServiceId id, CompanyId companyId, ServiceType type, Species species,
+                  PetSize petSize, Money price, TimeSlot timeSlot) {
         super(id, companyId, type, species);
         this.setPetSize(petSize);
         this.setPrice(price);
