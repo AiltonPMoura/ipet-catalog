@@ -26,7 +26,7 @@ public class DayCare extends Service
         var checkIn = checkInOut.checkIn();
         var checkOut = checkInOut.checkOut();
 
-        if (type != STANDARD_DAYCARE && type != VIP_DAYCARE)
+        if (type.category() != ServiceCategory.DAYCARE)
             throw new UnsupportedServiceCategoryException(type.name());
 
         if (checkIn.isBefore(LocalTime.of(6, 0, 0, 0)))

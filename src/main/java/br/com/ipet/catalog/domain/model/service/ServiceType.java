@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
 
-@Getter
 @RequiredArgsConstructor
 public enum ServiceType {
     BATH("Higienização completa", ServiceCategory.HIGYENE, Set.of(Species.GOG, Species.CAT)),
@@ -16,12 +15,13 @@ public enum ServiceType {
     VIP_HOTEL("Hospedagem VIP", ServiceCategory.ACCOMMODATION, Set.of(Species.GOG, Species.CAT)),
     IN_HOME_BOARDING("Hospedagem domiciliar", ServiceCategory.ACCOMMODATION, Set.of(Species.GOG, Species.CAT)),
 
-    STANDARD_DAYCARE("Creche comum", ServiceCategory.DAILY_CARE, Set.of(Species.GOG, Species.CAT)),
-    VIP_DAYCARE("Creche VIP", ServiceCategory.DAILY_CARE, Set.of(Species.GOG, Species.CAT)),
-    DOG_WALKING("Passeio para cães", ServiceCategory.DAILY_CARE, Set.of(Species.GOG)),
-    DROP_IN_VISIT("Visita rápida", ServiceCategory.DAILY_CARE, Set.of(Species.GOG, Species.CAT)),
-    TRAINING("Treinamento", ServiceCategory.DAILY_CARE, Set.of(Species.GOG)),
-    PLAY_SESSION("Sessão de brincadeiras", ServiceCategory.DAILY_CARE, Set.of(Species.GOG)),
+    STANDARD_DAYCARE("Creche comum", ServiceCategory.DAYCARE, Set.of(Species.GOG, Species.CAT)),
+    VIP_DAYCARE("Creche VIP", ServiceCategory.DAYCARE, Set.of(Species.GOG, Species.CAT)),
+
+    DOG_WALKING("Passeio para cães", ServiceCategory.ACTIVITY, Set.of(Species.GOG)),
+    DROP_IN_VISIT("Visita rápida", ServiceCategory.ACTIVITY, Set.of(Species.GOG, Species.CAT)),
+    TRAINING("Treinamento", ServiceCategory.ACTIVITY, Set.of(Species.GOG)),
+    PLAY_SESSION("Sessão de brincadeiras", ServiceCategory.ACTIVITY, Set.of(Species.GOG)),
 
     VETERINARY_CONSULTATION("Consulta veterinária", ServiceCategory.HEALTH, Set.of(Species.GOG, Species.CAT, Species.BIRD, Species.HORSE, Species.HAMSTER, Species.RABBIT));
 
@@ -35,5 +35,17 @@ public enum ServiceType {
 
     public boolean doesNotSupportsSpecies(Species species) {
         return !this.supportsSpecies(species);
+    }
+
+    public String description() {
+        return description;
+    }
+
+    public ServiceCategory category() {
+        return category;
+    }
+
+    public Set<Species> supportedSpecies() {
+        return supportedSpecies;
     }
 }

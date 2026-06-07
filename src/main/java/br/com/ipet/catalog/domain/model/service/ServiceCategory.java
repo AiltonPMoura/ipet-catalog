@@ -11,8 +11,9 @@ import java.util.List;
 public enum ServiceCategory {
     HIGYENE("Hygiene"),
     HEALTH("Health"),
-    DAILY_CARE("Daily Care"),
-    ACCOMMODATION("Accommodation");
+    DAYCARE("Daycare"),
+    ACCOMMODATION("Accommodation"),
+    ACTIVITY("Activity");
 
     private final String description;
     private final List<ServiceType> serviceTypes = new ArrayList<>();

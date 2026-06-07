@@ -6,8 +6,6 @@ import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import lombok.Builder;
 
-import static br.com.ipet.catalog.domain.model.service.ServiceType.GROOMING_SCISSOR;
-
 public class Hygiene extends Service
         implements Appointment, AggregateRoot<ServiceId> {
 
@@ -19,14 +17,11 @@ public class Hygiene extends Service
     private static Hygiene create(CompanyId companyId, ServiceType type, Species species,
                                   PetSize petSize, Money price, TimeSlot timeSlot) {
 
-        if (petSize == PetSize.GIANT && type == GROOMING_SCISSOR) {
-            if (timeSlot.minutes() > 240)
-                throw new ServiceTimeCannotBeGreaterThanFourHoursException(String.valueOf(timeSlot.minutes()));
-        } else if (petSize == PetSize.LARGE && type == GROOMING_SCISSOR) {
-            if (timeSlot.minutes() > 180)
-                throw new ServiceTimeCannotBeGreaterThanThreeHoursException(String.valueOf(timeSlot.minutes()));
-        } else if (timeSlot.minutes() > 120)
-                throw new ServiceTimeCannotBeGreaterThanTwoHoursException(String.valueOf(timeSlot.minutes()));
+        if (type.category() != ServiceCategory.HIGYENE)
+            throw new UnsupportedServiceCategoryException(type.category().name());
+
+        if (timeSlot.minutes() > 240)
+            throw new ServiceHigieneCannotBeGreaterThanFourHoursException(String.valueOf(timeSlot.minutes()));
 
         return new Hygiene(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
     }
