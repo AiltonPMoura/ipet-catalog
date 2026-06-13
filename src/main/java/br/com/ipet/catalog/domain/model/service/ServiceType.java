@@ -1,15 +1,14 @@
 package br.com.ipet.catalog.domain.model.service;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
 
 @RequiredArgsConstructor
 public enum ServiceType {
-    BATH("Higienização completa", ServiceCategory.HIGYENE, Set.of(Species.GOG, Species.CAT)),
-    GROOMING_SCISSOR("Higienização completa e corte na tesoura", ServiceCategory.HIGYENE, Set.of(Species.GOG)),
-    GROOMING_CLIPPERS("Higienização completa e corte com máquina", ServiceCategory.HIGYENE, Set.of(Species.GOG)),
+    BATH("Higienização completa", ServiceCategory.HYGIENE, Set.of(Species.GOG, Species.CAT)),
+    GROOMING_SCISSOR("Higienização completa e corte na tesoura", ServiceCategory.HYGIENE, Set.of(Species.GOG)),
+    GROOMING_CLIPPERS("Higienização completa e corte com máquina", ServiceCategory.HYGIENE, Set.of(Species.GOG)),
 
     STANDARD_HOTEL("Hospedagem comum", ServiceCategory.ACCOMMODATION, Set.of(Species.GOG, Species.CAT)),
     VIP_HOTEL("Hospedagem VIP", ServiceCategory.ACCOMMODATION, Set.of(Species.GOG, Species.CAT)),
@@ -33,7 +32,7 @@ public enum ServiceType {
         return this.supportedSpecies.contains(species);
     }
 
-    public boolean doesNotSupportsSpecies(Species species) {
+    public boolean doesNotSupportSpecies(Species species) {
         return !this.supportsSpecies(species);
     }
 

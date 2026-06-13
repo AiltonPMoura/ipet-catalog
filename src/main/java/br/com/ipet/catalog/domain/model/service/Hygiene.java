@@ -3,65 +3,63 @@ package br.com.ipet.catalog.domain.model.service;
 import br.com.ipet.catalog.domain.model.AggregateRoot;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
-import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import lombok.Builder;
-
-import java.time.Duration;
-import java.time.LocalTime;
 
 public class Hygiene extends Service
         implements Appointment, AggregateRoot<ServiceId> {
 
-    private PetSize petSize;
-    private TimeSlot timeSlot;
-    private Money price;
+    private DurationTime durationTime;
+    private ServiceRate rate;
 
-    @Builder(builderClassName = "CreateHygieneServiceBuilder", builderMethodName = "create")
-    private static Hygiene create(CompanyId companyId, ServiceType type, Species species,
-                                  PetSize petSize, Money price, TimeSlot timeSlot) {
+    static Hygiene create(CompanyId companyId, ServiceType type, Species species,
+                          DurationTime durationTime, ServiceRate rate) {
 
-        if (type.category() != ServiceCategory.HIGYENE)
+        validateCategory(type);
+        validateMaximumDuration(type, rate.size(), durationTime.duration());
+
+        return new Hygiene(new ServiceId(), companyId, type, species, durationTime, rate);
+    }
+
+    private static void validateMaximumDuration(ServiceType type, PetSize size, int duration) {
+        if (size == PetSize.GIANT && type == ServiceType.GROOMING_SCISSOR) {
+            if (duration > 300) throw new MaximumAppointmentDurationExceededException("Max 300 min");
+        } else if (size == PetSize.LARGE && type == ServiceType.GROOMING_SCISSOR) {
+            if (duration > 240) throw new MaximumAppointmentDurationExceededException("Max 240 min");
+        } else if (duration > 180) {
+            throw new MaximumAppointmentDurationExceededException("Max 180 min");
+        }
+    }
+
+    private static void validateCategory(ServiceType type) {
+        if (type.category() != ServiceCategory.HYGIENE)
             throw new UnsupportedServiceCategoryException(type.category().name());
-
-        if (timeSlot.duration().toMinutes() > 240)
-            throw new ServiceCannotBeGreaterThanFourHoursException(String.valueOf(timeSlot.duration().toMinutes()));
-
-        return new Hygiene(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
     }
 
     @Builder(builderClassName = "ExistingHygieneServiceBuilder", builderMethodName = "existing")
-    public Hygiene(ServiceId id, CompanyId companyId, ServiceType type, Species species,
-                   PetSize petSize, Money price, TimeSlot timeSlot) {
+    private Hygiene(ServiceId id, CompanyId companyId, ServiceType type, Species species,
+                   DurationTime durationTime, ServiceRate rate) {
         super(id, companyId, type, species);
-        this.setPetSize(petSize);
-        this.setPrice(price);
-        this.setTimeSlot(timeSlot);
+        this.setDurationTime(durationTime);
+        this.setRate(rate);
     }
 
-    public PetSize petSize() {
-        return petSize;
+    @Override
+    public ServiceRate rate() {
+        return rate;
     }
 
-    private void setPetSize(PetSize petSize) {
-        FieldValidator.requiresNonNull("petSize", petSize);
-        this.petSize = petSize;
+    private void setRate(ServiceRate rate) {
+        FieldValidator.requiresNonNull("rate", rate);
+        this.rate = rate;
     }
 
-    public Money price() {
-        return price;
+    @Override
+    public DurationTime durationTime() {
+        return durationTime;
     }
 
-    private void setPrice(Money price) {
-        FieldValidator.requiresNonNull("price", price);
-        this.price = price;
-    }
-
-    public TimeSlot duration() {
-        return timeSlot;
-    }
-
-    private void setTimeSlot(TimeSlot timeSlot) {
-        FieldValidator.requiresNonNull("duration", timeSlot);
-        this.timeSlot = timeSlot;
+    private void setDurationTime(DurationTime durationTime) {
+        FieldValidator.requiresNonNull("durationTime", durationTime);
+        this.durationTime = durationTime;
     }
 }
