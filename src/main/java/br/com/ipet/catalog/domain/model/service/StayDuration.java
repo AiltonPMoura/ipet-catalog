@@ -8,8 +8,8 @@ public record StayDuration(OffsetDateTime checkIn,
                            OffsetDateTime checkOut) {
 
     public StayDuration {
-        FieldValidator.requiresNonNull("checkIn", checkIn);
-        FieldValidator.requiresNonNull("checkOut", checkOut);
+        FieldValidator.requiresNonNull("checkInTime", checkIn);
+        FieldValidator.requiresNonNull("checkOutTime", checkOut);
         FieldValidator.requireStartDateTimeIsBeforeEndTime(checkIn, checkOut);
     }
 }

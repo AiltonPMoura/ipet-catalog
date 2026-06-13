@@ -22,7 +22,7 @@ public abstract class Service extends AbstractEventSourceEntity {
     }
 
     private static void validateSpecies(ServiceType type, Species species) {
-        if (type.doesNotSupportsSpecies(species))
+        if (type.doesNotSupportSpecies(species))
             throw new ServiceTypeDoesNotSupportSpeciesException(type.name(), species.name());
     }
 

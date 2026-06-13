@@ -44,8 +44,8 @@ public class Accommodation extends Service
             throw new InvalidCheckOutTimeException("Check-out deve estar entre 12h e 13h");
     }
 
-    private static void validateMinimumDuration(LocalTime checkIn, LocalTime checkOut) {
-        long durationHours = Duration.between(checkIn, checkOut).toHours() + 24;
+    private static void validateMinimumDuration(LocalTime checkInTime, LocalTime checkOutTime) {
+        long durationHours = Duration.between(checkInTime, checkOutTime).toHours() + 24;
         if (durationHours < 18)
             throw new MinimumStayDurationException("Duração mínima de 18 horas não atingida");
     }
@@ -62,16 +62,16 @@ public class Accommodation extends Service
     private Accommodation(ServiceId id, CompanyId companyId, ServiceType type, Species species,
                          CheckInOutTime checkInOutTime, List<ServiceRate> rates) {
         super(id, companyId, type, species);
-        this.setCheckinOut(checkInOutTime);
+        this.setCheckinOutTime(checkInOutTime);
         this.setRates(rates);
     }
 
-    public CheckInOutTime checkInOut() {
+    public CheckInOutTime checkInOutTime() {
         return checkInOutTime;
     }
 
-    private void setCheckinOut(CheckInOutTime checkInOutTime) {
-        FieldValidator.requiresNonNull("checkInOut", checkInOutTime);
+    private void setCheckinOutTime(CheckInOutTime checkInOutTime) {
+        FieldValidator.requiresNonNull("checkInOutTime", checkInOutTime);
         this.checkInOutTime = checkInOutTime;
     }
 
