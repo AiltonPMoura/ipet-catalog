@@ -8,51 +8,71 @@ import lombok.Builder;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public class Accommodation extends Service
         implements Stay, AggregateRoot<ServiceId> {
 
-    private CheckInOut checkInOut;
+    private CheckInOutTime checkInOutTime;
     private List<ServiceRate> rates;
 
-    @Builder(builderClassName = "CreateAccommodationServiceBuilder", builderMethodName = "create")
-    private static Accommodation create(CompanyId companyId, ServiceType type, Species species,
-                                        CheckInOut checkInOut, List<ServiceRate> rates) {
+    static Accommodation create(CompanyId companyId, ServiceType type, Species species,
+                                CheckInOutTime checkInOutTime, List<ServiceRate> rates) {
 
-        var checkIn = checkInOut.checkIn();
-        var checkOut = checkInOut.checkOut();
+        validateCategory(type);
+        validateCheckIn(checkInOutTime.checkInTime());
+        validateCheckOut(checkInOutTime.checkOutTime());
+        validateMinimumDuration(checkInOutTime.checkInTime(), checkInOutTime.checkOutTime());
+        validateUniqueRates(rates);
 
+        return new Accommodation(new ServiceId(), companyId, type, species, checkInOutTime, rates);
+    }
+
+    private static void validateCategory(ServiceType type) {
         if (type.category() != ServiceCategory.ACCOMMODATION)
             throw new UnsupportedServiceCategoryException(type.name());
+    }
 
-        if (checkIn.isBefore(LocalTime.of(14, 0, 0, 0)))
-            throw new CheckinHoursCannotBeLessThanSixHoursException("");
+    private static void validateCheckIn(LocalTime checkInTime) {
+        if (checkInTime.isBefore(LocalTime.of(14, 0)) || checkInTime.isAfter(LocalTime.of(18, 0)))
+            throw new InvalidCheckInTimeException("Check-in deve estar entre 14h e 18h");
+    }
 
-        if (checkOut.isAfter(LocalTime.of(12, 0, 0, 0)))
-            throw new CheckoutHoursCannotBeGreaterThanNineteenHoursException("");
+    private static void validateCheckOut(LocalTime checkOutTime) {
+        if (checkOutTime.isBefore(LocalTime.of(12, 0)) || checkOutTime.isAfter(LocalTime.of(13, 0)))
+            throw new InvalidCheckOutTimeException("Check-out deve estar entre 12h e 13h");
+    }
 
-        if (Duration.between(checkIn, checkOut).toHours() < 22)
-            throw new DayCareCannotBeLessThanFourHoursException("");
+    private static void validateMinimumDuration(LocalTime checkIn, LocalTime checkOut) {
+        long durationHours = Duration.between(checkIn, checkOut).toHours() + 24;
+        if (durationHours < 18)
+            throw new MinimumStayDurationException("Duração mínima de 18 horas não atingida");
+    }
 
-        return new Accommodation(new ServiceId(), companyId, type, species, checkInOut, rates);
+    private static void validateUniqueRates(List<ServiceRate> rates) {
+        var petSizes = new HashSet<PetSize>();
+
+        for (var rate : rates)
+            if (!petSizes.add(rate.size()))
+                throw new DuplicatePetSizeException("Duplicate PetSize found in rates: " + rate.size());
     }
 
     @Builder(builderClassName = "ExistingAccommodationServiceBuilder", builderMethodName = "existing")
-    public Accommodation(ServiceId id, CompanyId companyId, ServiceType type, Species species,
-                         CheckInOut checkInOut, List<ServiceRate> rates) {
+    private Accommodation(ServiceId id, CompanyId companyId, ServiceType type, Species species,
+                         CheckInOutTime checkInOutTime, List<ServiceRate> rates) {
         super(id, companyId, type, species);
-        this.setCheckinOut(checkInOut);
+        this.setCheckinOut(checkInOutTime);
         this.setRates(rates);
     }
 
-    public CheckInOut checkInOut() {
-        return checkInOut;
+    public CheckInOutTime checkInOut() {
+        return checkInOutTime;
     }
 
-    private void setCheckinOut(CheckInOut checkInOut) {
-        FieldValidator.requiresNonNull("checkInOut", checkInOut);
-        this.checkInOut = checkInOut;
+    private void setCheckinOut(CheckInOutTime checkInOutTime) {
+        FieldValidator.requiresNonNull("checkInOut", checkInOutTime);
+        this.checkInOutTime = checkInOutTime;
     }
 
     @Override
@@ -61,7 +81,7 @@ public class Accommodation extends Service
     }
 
     private void setRates(List<ServiceRate> rates) {
-        FieldValidator.requiresNonNull("rates", rates);
+        FieldValidator.requiresNonEmpty("rates", rates);
         this.rates = rates;
     }
 }

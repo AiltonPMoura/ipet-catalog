@@ -13,13 +13,17 @@ public abstract class Service extends AbstractEventSourceEntity {
     private Species species;
 
     protected Service(ServiceId id, CompanyId companyId, ServiceType type, Species species) {
-        if (type.doesNotSupportsSpecies(species))
-            throw new ServiceTypeDoesNotSupportSpeciesException(type.name(), species.name());
+        validateSpecies(type, species);
 
         this.setId(id);
         this.setCompanyId(companyId);
         this.setType(type);
         this.setSpecies(species);
+    }
+
+    private static void validateSpecies(ServiceType type, Species species) {
+        if (type.doesNotSupportsSpecies(species))
+            throw new ServiceTypeDoesNotSupportSpeciesException(type.name(), species.name());
     }
 
     public ServiceId id() {
