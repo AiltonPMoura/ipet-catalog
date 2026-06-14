@@ -1,0 +1,12 @@
+package br.com.ipet.catalog.domain.model.offering;
+
+import br.com.ipet.catalog.domain.model.DomainException;
+
+import java.math.BigDecimal;
+
+public class InvalidServicePriceException extends DomainException {
+    public InvalidServicePriceException(BigDecimal provided) {
+        super("Service price cannot be greater than 300.00. Provided value: " + provided);
+    }
+}
+

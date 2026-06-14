@@ -1,12 +1,11 @@
 package br.com.ipet.catalog.domain.model;
 
 import br.com.ipet.catalog.domain.model.commons.exception.FieldCannotBeEmptyException;
-import br.com.ipet.catalog.domain.model.service.StartTimeMustBeBeforeEndTimeException;
+import br.com.ipet.catalog.domain.model.offering.StartTimeMustBeBeforeEndTimeException;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
-import java.time.OffsetTime;
 import java.util.Collection;
 
 public class FieldValidator {

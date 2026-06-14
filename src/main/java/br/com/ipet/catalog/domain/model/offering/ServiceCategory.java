@@ -1,0 +1,20 @@
+package br.com.ipet.catalog.domain.model.offering;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@RequiredArgsConstructor
+public enum ServiceCategory {
+    HYGIENE("Hygiene"),
+    HEALTH("Health"),
+    DAYCARE("Daycare"),
+    ACCOMMODATION("Accommodation"),
+    ACTIVITY("Activity");
+
+    private final String description;
+    private final List<ServiceType> serviceTypes = new ArrayList<>();
+}
