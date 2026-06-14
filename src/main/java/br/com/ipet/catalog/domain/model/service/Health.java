@@ -3,62 +3,58 @@ package br.com.ipet.catalog.domain.model.service;
 import br.com.ipet.catalog.domain.model.AggregateRoot;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
-import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import lombok.Builder;
 
 public class Health extends Service
         implements Appointment, AggregateRoot<ServiceId> {
 
-    private PetSize petSize;
-    private TimeSlot timeSlot;
-    private Money price;
+    private DurationTime duration;
+    private ServiceRate rate;
 
     @Builder(builderClassName = "CreateHealthServiceBuilder", builderMethodName = "create")
-    private static Health create(CompanyId companyId, ServiceType type, Species species,
-                                 PetSize petSize, Money price, TimeSlot timeSlot) {
+    static Health create(CompanyId companyId, ServiceType type, Species species,
+                                 DurationTime duration, ServiceRate rate) {
 
+        validateCategory(type);
+        validateMaximumDuration(duration.value());
+
+        return new Health(new ServiceId(), companyId, type, species,  duration, rate);
+    }
+
+    private static void validateCategory(ServiceType type) {
         if (type.category() != ServiceCategory.HEALTH)
             throw new UnsupportedServiceCategoryException(type.category().name());
+    }
 
-        if (timeSlot.duration().toMinutes() > 180)
-            throw new ServiceTimeCannotBeGreaterThanThreeHoursException(String.valueOf(timeSlot.duration().toMinutes()));
-
-        return new Health(new ServiceId(), companyId, type, species, petSize, price, timeSlot);
+    private static void validateMaximumDuration(int duration) {
+        if (duration > 120)
+            throw new MaximumAppointmentDurationExceededException("Max 120 min");
     }
 
     @Builder(builderClassName = "ExistingHealthServiceBuilder", builderMethodName = "existing")
-    public Health(ServiceId id, CompanyId companyId, ServiceType type, Species species,
-                  PetSize petSize, Money price, TimeSlot timeSlot) {
+    private Health(ServiceId id, CompanyId companyId, ServiceType type, Species species,
+                   DurationTime duration, ServiceRate rate) {
         super(id, companyId, type, species);
-        this.setPetSize(petSize);
-        this.setPrice(price);
-        this.setTimeSlot(timeSlot);
+        this.setRate(rate);
+        this.setDuration(duration);
     }
 
-    public PetSize petSize() {
-        return petSize;
+    @Override
+    public ServiceRate rate() {
+        return rate;
     }
 
-    private void setPetSize(PetSize petSize) {
-        FieldValidator.requiresNonNull("petSize", petSize);
-        this.petSize = petSize;
+    private void setRate(ServiceRate rate) {
+        FieldValidator.requiresNonNull("rate", rate);
+        this.rate = rate;
     }
 
-    public Money price() {
-        return price;
+    public DurationTime duration() {
+        return duration;
     }
 
-    private void setPrice(Money price) {
-        FieldValidator.requiresNonNull("price", price);
-        this.price = price;
-    }
-
-    public TimeSlot duration() {
-        return timeSlot;
-    }
-
-    private void setTimeSlot(TimeSlot timeSlot) {
-        FieldValidator.requiresNonNull("duration", timeSlot);
-        this.timeSlot = timeSlot;
+    private void setDuration(DurationTime duration) {
+        FieldValidator.requiresNonNull("duration", duration);
+        this.duration = duration;
     }
 }

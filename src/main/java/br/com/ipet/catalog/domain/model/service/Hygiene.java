@@ -8,26 +8,17 @@ import lombok.Builder;
 public class Hygiene extends Service
         implements Appointment, AggregateRoot<ServiceId> {
 
-    private DurationTime durationTime;
+    private DurationTime duration;
     private ServiceRate rate;
 
+    @Builder(builderClassName = "CreateHygieneServiceBuilder", builderMethodName = "create")
     static Hygiene create(CompanyId companyId, ServiceType type, Species species,
-                          DurationTime durationTime, ServiceRate rate) {
+                          DurationTime duration, ServiceRate rate) {
 
         validateCategory(type);
-        validateMaximumDuration(type, rate.size(), durationTime.duration());
+        validateMaximumDuration(type, rate.size(), duration.value());
 
-        return new Hygiene(new ServiceId(), companyId, type, species, durationTime, rate);
-    }
-
-    private static void validateMaximumDuration(ServiceType type, PetSize size, int duration) {
-        if (size == PetSize.GIANT && type == ServiceType.GROOMING_SCISSOR) {
-            if (duration > 300) throw new MaximumAppointmentDurationExceededException("Max 300 min");
-        } else if (size == PetSize.LARGE && type == ServiceType.GROOMING_SCISSOR) {
-            if (duration > 240) throw new MaximumAppointmentDurationExceededException("Max 240 min");
-        } else if (duration > 180) {
-            throw new MaximumAppointmentDurationExceededException("Max 180 min");
-        }
+        return new Hygiene(new ServiceId(), companyId, type, species, duration, rate);
     }
 
     private static void validateCategory(ServiceType type) {
@@ -35,11 +26,25 @@ public class Hygiene extends Service
             throw new UnsupportedServiceCategoryException(type.category().name());
     }
 
+    private static void validateMaximumDuration(ServiceType type, PetSize size, int duration) {
+        int maxAllowed = 180;
+
+        if (type == ServiceType.GROOMING_SCISSOR)
+            maxAllowed = switch (size) {
+                case GIANT -> 300;
+                case LARGE -> 240;
+                default -> 180;
+            };
+
+        if (duration > maxAllowed)
+            throw new MaximumAppointmentDurationExceededException("Max " + maxAllowed + " min");
+    }
+
     @Builder(builderClassName = "ExistingHygieneServiceBuilder", builderMethodName = "existing")
     private Hygiene(ServiceId id, CompanyId companyId, ServiceType type, Species species,
-                   DurationTime durationTime, ServiceRate rate) {
+                    DurationTime duration, ServiceRate rate) {
         super(id, companyId, type, species);
-        this.setDurationTime(durationTime);
+        this.setDuration(duration);
         this.setRate(rate);
     }
 
@@ -54,12 +59,12 @@ public class Hygiene extends Service
     }
 
     @Override
-    public DurationTime durationTime() {
-        return durationTime;
+    public DurationTime duration() {
+        return duration;
     }
 
-    private void setDurationTime(DurationTime durationTime) {
-        FieldValidator.requiresNonNull("durationTime", durationTime);
-        this.durationTime = durationTime;
+    private void setDuration(DurationTime duration) {
+        FieldValidator.requiresNonNull("duration", duration);
+        this.duration = duration;
     }
 }

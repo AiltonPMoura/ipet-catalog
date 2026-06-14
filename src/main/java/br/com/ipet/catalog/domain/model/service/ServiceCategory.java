@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public enum ServiceCategory {
-    HIGYENE("Hygiene"),
+    HYGIENE("Hygiene"),
     HEALTH("Health"),
     DAYCARE("Daycare"),
     ACCOMMODATION("Accommodation"),
