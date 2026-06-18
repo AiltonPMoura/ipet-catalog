@@ -5,6 +5,7 @@ import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import org.springframework.data.annotation.Id;
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public abstract class ServiceOffering extends AbstractEventSourceEntity {
@@ -13,14 +14,17 @@ public abstract class ServiceOffering extends AbstractEventSourceEntity {
     private CompanyId companyId;
     private ServiceType type;
     private Species species;
+    private OffsetDateTime registerAt;
 
-    protected ServiceOffering(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species) {
+    protected ServiceOffering(ServiceOffereingId id, CompanyId companyId,
+                              ServiceType type, Species species, OffsetDateTime registerAt) {
         validateSpecies(type, species);
 
         this.setId(id);
         this.setCompanyId(companyId);
         this.setType(type);
         this.setSpecies(species);
+        this.setRegisterAt(OffsetDateTime.now());
     }
 
     private static void validateSpecies(ServiceType type, Species species) {
@@ -62,6 +66,15 @@ public abstract class ServiceOffering extends AbstractEventSourceEntity {
     private void setSpecies(Species species) {
         FieldValidator.requiresNonNull("species", species);
         this.species = species;
+    }
+
+    public OffsetDateTime registerAt() {
+        return registerAt;
+    }
+
+    private void setRegisterAt(OffsetDateTime registerAt) {
+        FieldValidator.requiresNonNull("registerAt", registerAt);
+        this.registerAt = registerAt;
     }
 
     @Override

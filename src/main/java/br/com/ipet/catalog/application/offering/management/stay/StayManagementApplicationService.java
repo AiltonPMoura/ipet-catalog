@@ -1,6 +1,7 @@
 package br.com.ipet.catalog.application.offering.management.stay;
 
 import br.com.ipet.catalog.domain.model.FieldValidator;
+import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import br.com.ipet.catalog.domain.model.offering.PetSize;
 import br.com.ipet.catalog.domain.model.offering.Rate;
@@ -31,7 +32,7 @@ public class StayManagementApplicationService {
         FieldValidator.requiresNonNull("input", input);
 
         var dayCare = this.stayRegistrationService.registerDayCare(
-                input.companyId(),
+                new CompanyId(input.companyId()),
                 ServiceType.valueOf(input.serviceType()),
                 Species.valueOf(input.species()),
                 new CheckInOutTime(input.checkin(), input.checkout()),
@@ -43,10 +44,28 @@ public class StayManagementApplicationService {
         return dayCare.id().value();
     }
 
+    public UUID createAccomodation(StayInput input) {
+        FieldValidator.requiresNonNull("input", input);
+
+        var accommodation = this.stayRegistrationService.registerAccommodation(
+                new CompanyId(input.companyId()),
+                ServiceType.valueOf(input.serviceType()),
+                Species.valueOf(input.species()),
+                new CheckInOutTime(input.checkin(), input.checkout()),
+                toRates(input.rates())
+        );
+
+        accomodations.add(accommodation);
+
+        return accommodation.id().value();
+    }
+
     private Set<Rate> toRates(Set<RateData> rates) {
         return rates.stream()
-                .map(rate -> new Rate(PetSize.valueOf(rate.petSize()), new Money(rate.price())))
-                .collect(Collectors.toSet());
+                .map(rate -> new Rate(
+                        PetSize.valueOf(rate.petSize()),
+                        new Money(rate.price())
+                )).collect(Collectors.toSet());
     }
 
     /*public void update(UUID serviceId, UUID companyId, ServiceUpdateInput input) {

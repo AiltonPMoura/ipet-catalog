@@ -22,7 +22,7 @@ public class StayRegistrationService {
     private final Accomodations accomodations;
 
     public DayCare registerDayCare(CompanyId companyId, ServiceType serviceType, Species species,
-                                           CheckInOutTime checkInOutTime, Set<Rate> rates) {
+                                   CheckInOutTime checkInOutTime, Set<Rate> rates) {
 
         this.verifyExistingStay(companyId);
 
@@ -35,8 +35,8 @@ public class StayRegistrationService {
                 .build();
     }
 
-    public ServiceOffering registerAccommodation(CompanyId companyId, ServiceType serviceType, Species species,
-                                                 CheckInOutTime checkInOutTime, List<Rate> rates) {
+    public Accommodation registerAccommodation(CompanyId companyId, ServiceType serviceType, Species species,
+                                                 CheckInOutTime checkInOutTime, Set<Rate> rates) {
 
         this.verifyExistingStay(companyId);
 

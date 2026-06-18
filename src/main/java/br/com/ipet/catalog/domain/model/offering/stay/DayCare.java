@@ -17,6 +17,7 @@ import lombok.Builder;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class DayCare extends ServiceOffering
 
     @Builder(builderClassName = "CreateNewDayCareServiceBuilder", builderMethodName = "createNew", access = AccessLevel.PACKAGE)
     private static DayCare create(CompanyId companyId, ServiceType type, Species species,
-                                  CheckInOutTime checkInOutTime, Set<Rate> rates) {
+                                  CheckInOutTime checkInOutTime, Set<Rate> rates, OffsetDateTime registerAt) {
 
         validateCategory(type);
         validateCheckIn(checkInOutTime.checkInTime());
@@ -37,7 +38,7 @@ public class DayCare extends ServiceOffering
         validateMinimumDuration(checkInOutTime.checkInTime(), checkInOutTime.checkOutTime());
         validateUniqueRates(rates);
 
-        return new DayCare(new ServiceOffereingId(), companyId, type, species, checkInOutTime, rates);
+        return new DayCare(new ServiceOffereingId(), companyId, type, species, checkInOutTime, rates, registerAt);
     }
 
     private static void validateCategory(ServiceType type) {
@@ -70,8 +71,8 @@ public class DayCare extends ServiceOffering
 
     @Builder(builderClassName = "ExistingDayCareServiceBuilder", builderMethodName = "existing")
     private DayCare(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                    CheckInOutTime checkInOutTime, Set<Rate> rates) {
-        super(id, companyId, type, species);
+                    CheckInOutTime checkInOutTime, Set<Rate> rates, OffsetDateTime registerAt) {
+        super(id, companyId, type, species, registerAt);
         this.setCheckinOutTime(checkInOutTime);
         this.setRates(rates);
     }
