@@ -1,9 +1,8 @@
-package br.com.ipet.catalog.domain.model.offering.appointment;
+package br.com.ipet.catalog.domain.model.offering.stay.accommodation;
 
 import br.com.ipet.catalog.domain.model.Repository;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
-import br.com.ipet.catalog.domain.model.offering.stay.Accommodation;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package br.com.ipet.catalog.domain.model.offering.stay;
+package br.com.ipet.catalog.domain.model.offering.stay.daycare;
 
 import br.com.ipet.catalog.domain.model.DomainException;
 

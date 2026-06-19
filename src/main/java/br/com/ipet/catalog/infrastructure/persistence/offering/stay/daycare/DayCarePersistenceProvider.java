@@ -2,8 +2,8 @@ package br.com.ipet.catalog.infrastructure.persistence.offering.stay.daycare;
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
-import br.com.ipet.catalog.domain.model.offering.stay.DayCare;
-import br.com.ipet.catalog.domain.model.offering.stay.DayCares;
+import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCare;
+import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCares;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

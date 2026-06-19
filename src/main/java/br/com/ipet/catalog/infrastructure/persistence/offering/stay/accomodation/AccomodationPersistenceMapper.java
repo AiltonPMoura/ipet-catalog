@@ -1,7 +1,7 @@
 package br.com.ipet.catalog.infrastructure.persistence.offering.stay.accomodation;
 
 import br.com.ipet.catalog.domain.model.offering.Rate;
-import br.com.ipet.catalog.domain.model.offering.stay.Accommodation;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodation;
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
 import org.springframework.stereotype.Component;
 

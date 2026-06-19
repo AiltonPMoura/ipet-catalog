@@ -7,11 +7,14 @@ import br.com.ipet.catalog.domain.model.offering.ServiceDoesNotBelongToTheCompan
 import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
-import br.com.ipet.catalog.domain.model.offering.appointment.Accomodations;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accomodations;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodation;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOutTime;
+import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCare;
+import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCares;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -36,7 +39,7 @@ public class StayRegistrationService {
     }
 
     public Accommodation registerAccommodation(CompanyId companyId, ServiceType serviceType, Species species,
-                                                 CheckInOutTime checkInOutTime, Set<Rate> rates) {
+                                               CheckInOutTime checkInOutTime, Set<Rate> rates) {
 
         this.verifyExistingStay(companyId);
 

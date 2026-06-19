@@ -6,8 +6,8 @@ import br.com.ipet.catalog.domain.model.offering.Rate;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
-import br.com.ipet.catalog.domain.model.offering.stay.CheckInOutTime;
-import br.com.ipet.catalog.domain.model.offering.stay.DayCare;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOutTime;
+import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCare;
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
 import org.springframework.stereotype.Component;
 

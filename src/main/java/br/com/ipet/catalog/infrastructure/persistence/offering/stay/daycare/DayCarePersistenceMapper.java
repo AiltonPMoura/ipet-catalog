@@ -1,7 +1,7 @@
 package br.com.ipet.catalog.infrastructure.persistence.offering.stay.daycare;
 
 import br.com.ipet.catalog.domain.model.offering.Rate;
-import br.com.ipet.catalog.domain.model.offering.stay.DayCare;
+import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCare;
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
 import org.springframework.stereotype.Component;
 

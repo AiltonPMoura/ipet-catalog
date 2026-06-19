@@ -2,8 +2,8 @@ package br.com.ipet.catalog.infrastructure.persistence.offering.stay.accomodatio
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
-import br.com.ipet.catalog.domain.model.offering.appointment.Accomodations;
-import br.com.ipet.catalog.domain.model.offering.stay.Accommodation;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accomodations;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
