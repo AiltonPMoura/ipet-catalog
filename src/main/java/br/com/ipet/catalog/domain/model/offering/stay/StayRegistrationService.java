@@ -7,7 +7,7 @@ import br.com.ipet.catalog.domain.model.offering.ServiceDoesNotBelongToTheCompan
 import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
-import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accomodations;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodations;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodation;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOut;
 import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCare;
@@ -22,10 +22,10 @@ import java.util.Set;
 public class StayRegistrationService {
 
     private final DayCares dayCares;
-    private final Accomodations accomodations;
+    private final Accommodations accommodations;
 
     public DayCare registerDayCare(CompanyId companyId, ServiceType serviceType, Species species,
-                                   CheckInOut checkInOut, Set<RateService> rateServices) {
+                                   CheckInOut checkInOut, Set<RateService> rates) {
 
         this.verifyExistingStay(companyId);
 
@@ -34,12 +34,12 @@ public class StayRegistrationService {
                 .type(serviceType)
                 .species(species)
                 .checkInOut(checkInOut)
-                .rates(rateServices)
+                .rates(rates)
                 .build();
     }
 
     public Accommodation registerAccommodation(CompanyId companyId, ServiceType serviceType, Species species,
-                                               CheckInOut checkInOut, Set<RateService> rateServices) {
+                                               CheckInOut checkInOut, Set<RateService> rates) {
 
         this.verifyExistingStay(companyId);
 
@@ -48,12 +48,12 @@ public class StayRegistrationService {
                 .type(serviceType)
                 .species(species)
                 .checkInOut(checkInOut)
-                .rates(rateServices)
+                .rates(rates)
                 .build();
     }
 
     private void verifyExistingStay(CompanyId companyId) {
-        if (dayCares.existsOfCompany(companyId) || accomodations.existsOfCompany(companyId))
+        if (dayCares.existsOfCompany(companyId) || accommodations.existsOfCompany(companyId))
             throw new StayAlreadyException("Empresa já possui um serviço de estadia cadastrado");
     }
 

@@ -1,6 +1,4 @@
-package br.com.ipet.catalog.application.offering.management;
-
-import br.com.ipet.catalog.application.commons.RateData;
+package br.com.ipet.catalog.application.commons;
 
 import java.util.UUID;
 

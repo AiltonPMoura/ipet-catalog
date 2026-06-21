@@ -2,7 +2,7 @@ package br.com.ipet.catalog.infrastructure.persistence.offering.accommodation;
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
-import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accomodations;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodations;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class AccommodationPersistenceProvider implements Accomodations {
+public class AccommodationPersistenceProvider implements Accommodations {
 
     private final AccommodationPersistenceRepository repository;
     private final AccommodationMapper accommodationMapper;

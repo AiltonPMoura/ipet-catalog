@@ -1,14 +1,11 @@
 package br.com.ipet.catalog.application.offering.management;
 
-import br.com.ipet.catalog.application.commons.RateData;
+import br.com.ipet.catalog.application.commons.RateMapper;
+import br.com.ipet.catalog.application.commons.StayInput;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
-import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
-import br.com.ipet.catalog.domain.model.offering.PetSize;
-import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
-import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accomodations;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOut;
 import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCares;
 import br.com.ipet.catalog.domain.model.offering.stay.StayRegistrationService;
@@ -16,20 +13,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class StayManagementApplicationService {
+public class DayCareManagementApplicationService {
 
-    private StayRegistrationService stayRegistrationService;
-    private DayCares dayCares;
-    private Accomodations accomodations;
+    private final StayRegistrationService stayRegistrationService;
+    private final DayCares dayCares;
+    private final RateMapper rateMapper;
 
-    public UUID createDayCare(UUID companyId, StayInput input) {
+    public UUID create(UUID companyId, StayInput input) {
         FieldValidator.requiresNonNull("companyId", companyId);
         FieldValidator.requiresNonNull("input", input);
 
@@ -38,37 +33,12 @@ public class StayManagementApplicationService {
                 ServiceType.valueOf(input.serviceType()),
                 Species.valueOf(input.species()),
                 new CheckInOut(input.checkin(), input.checkout()),
-                toRates(input.rates())
+                rateMapper.toRates(input.rates())
         );
 
         dayCares.add(dayCare);
 
         return dayCare.id().value();
-    }
-
-    public UUID createAccomodation(UUID companyId, StayInput input) {
-        FieldValidator.requiresNonNull("companyId", companyId);
-        FieldValidator.requiresNonNull("input", input);
-
-        var accommodation = this.stayRegistrationService.registerAccommodation(
-                new CompanyId(companyId),
-                ServiceType.valueOf(input.serviceType()),
-                Species.valueOf(input.species()),
-                new CheckInOut(input.checkin(), input.checkout()),
-                toRates(input.rates())
-        );
-
-        accomodations.add(accommodation);
-
-        return accommodation.id().value();
-    }
-
-    private Set<RateService> toRates(Set<RateData> rates) {
-        return rates.stream()
-                .map(rate -> new RateService(
-                        PetSize.valueOf(rate.petSize()),
-                        new Money(rate.price())
-                )).collect(Collectors.toSet());
     }
 
     /*public void update(UUID serviceId, UUID companyId, ServiceUpdateInput input) {
