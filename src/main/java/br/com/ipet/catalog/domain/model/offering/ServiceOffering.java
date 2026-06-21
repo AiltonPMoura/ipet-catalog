@@ -3,7 +3,6 @@ package br.com.ipet.catalog.domain.model.offering;
 import br.com.ipet.catalog.domain.model.AbstractEventSourceEntity;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
-import org.springframework.data.annotation.Id;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;

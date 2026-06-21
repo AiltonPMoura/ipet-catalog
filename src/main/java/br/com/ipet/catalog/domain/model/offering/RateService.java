@@ -4,11 +4,11 @@ import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import java.math.BigDecimal;
 
-public record Rate(PetSize size, Money price) {
+public record RateService(PetSize size, Money price) {
 
     private static final BigDecimal MAX_PRICE = new BigDecimal("300.00");
     
-    public Rate {
+    public RateService {
         FieldValidator.requiresNonNull("size", size);
         FieldValidator.requiresNonNull("price", price);
 

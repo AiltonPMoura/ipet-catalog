@@ -1,4 +1,4 @@
-package br.com.ipet.catalog.infrastructure.persistence.offering.stay.daycare;
+package br.com.ipet.catalog.infrastructure.persistence.offering.daycare;
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
@@ -51,12 +51,12 @@ public class DayCarePersistenceProvider implements DayCares {
     @Override
     @Transactional(readOnly = true)
     public Optional<DayCare> ofCompany(CompanyId companyId) {
-        return repository.findByCompanyId(companyId).map(dayCareMapper::toDomain);
+        return repository.findByCompanyId(companyId.value()).map(dayCareMapper::toDomain);
     }
 
     @Override
     public boolean existsOfCompany(CompanyId companyId) {
-        return repository.existsByCompanyId(companyId);
+        return repository.existsByCompanyId(companyId.value());
     }
 
     private void insert(DayCare dayCare) {

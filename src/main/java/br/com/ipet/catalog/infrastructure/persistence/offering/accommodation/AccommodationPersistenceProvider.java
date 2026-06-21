@@ -1,4 +1,4 @@
-package br.com.ipet.catalog.infrastructure.persistence.offering.stay.accomodation;
+package br.com.ipet.catalog.infrastructure.persistence.offering.accommodation;
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
@@ -12,16 +12,16 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class AccomodationPersistenceProvider implements Accomodations {
+public class AccommodationPersistenceProvider implements Accomodations {
 
-    private final AccomodationPersistenceRepository repository;
-    private final AccomodationMapper accomodationMapper;
-    private final AccomodationPersistenceMapper accomodationPersistenceMapper;
+    private final AccommodationPersistenceRepository repository;
+    private final AccommodationMapper accommodationMapper;
+    private final AccommodationPersistenceMapper accommodationPersistenceMapper;
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Accommodation> ofId(ServiceOffereingId id) {
-        return repository.findById(id.value()).map(accomodationMapper::toDomain);
+        return repository.findById(id.value()).map(accommodationMapper::toDomain);
     }
 
     @Override
@@ -51,21 +51,21 @@ public class AccomodationPersistenceProvider implements Accomodations {
     @Override
     @Transactional(readOnly = true)
     public Optional<Accommodation> ofCompany(CompanyId companyId) {
-        return repository.findByCompanyId(companyId).map(accomodationMapper::toDomain);
+        return repository.findByCompanyId(companyId.value()).map(accommodationMapper::toDomain);
     }
 
     @Override
     public boolean existsOfCompany(CompanyId companyId) {
-        return repository.existsByCompanyId(companyId);
+        return repository.existsByCompanyId(companyId.value());
     }
 
     private void insert(Accommodation accommodation) {
-        var accommodationPersistence = accomodationPersistenceMapper.fromDomain(accommodation);
+        var accommodationPersistence = accommodationPersistenceMapper.fromDomain(accommodation);
         repository.save(accommodationPersistence);
     }
 
-    private void update(AccomodationDocument accommodationPersistence, Accommodation accommodation) {
-        accommodationPersistence = accomodationPersistenceMapper.merge(accommodationPersistence, accommodation);
+    private void update(AccommodationDocument accommodationPersistence, Accommodation accommodation) {
+        accommodationPersistence = accommodationPersistenceMapper.merge(accommodationPersistence, accommodation);
         repository.save(accommodationPersistence);
     }
 }

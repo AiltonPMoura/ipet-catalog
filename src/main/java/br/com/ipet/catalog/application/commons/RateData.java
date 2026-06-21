@@ -1,4 +1,4 @@
-package br.com.ipet.catalog.application.offering.management.stay;
+package br.com.ipet.catalog.application.commons;
 
 import java.math.BigDecimal;
 

@@ -1,40 +1,38 @@
-package br.com.ipet.catalog.infrastructure.persistence.offering.stay.daycare;
+package br.com.ipet.catalog.infrastructure.persistence.offering;
 
-import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "daycares")
-public class DayCareDocument
-        extends AbstractAggregateRoot<DayCareDocument> {
+@Document(collection = "service_offerings")
+public class ServiceOfferingDocument extends AbstractAggregateRoot<ServiceOfferingDocument> {
 
     @Id
+    @EqualsAndHashCode.Include
     private UUID id;
+
+    @Indexed
     private UUID companyId;
     private String type;
     private String species;
-    private LocalTime checkIn;
-    private LocalTime checkOut;
-    private Set<RateDocument> rates = new HashSet<>();
 
     private OffsetDateTime registerAt;
 
@@ -56,5 +54,4 @@ public class DayCareDocument
             for (Object event : events)
                 this.registerEvent(event);
     }
-
 }

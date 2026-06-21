@@ -1,8 +1,8 @@
-package br.com.ipet.catalog.infrastructure.persistence.offering.stay.daycare;
+package br.com.ipet.catalog.infrastructure.persistence.offering.daycare;
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import br.com.ipet.catalog.domain.model.offering.PetSize;
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
@@ -28,8 +28,8 @@ public class DayCareMapper {
                 .build();
     }
 
-    private Set<Rate> toRates(Set<RateDocument> rateDocuments) {
-        return rateDocuments.stream().map(rateDocument -> new Rate(
+    private Set<RateService> toRates(Set<RateDocument> rateDocuments) {
+        return rateDocuments.stream().map(rateDocument -> new RateService(
                 PetSize.valueOf(rateDocument.petSize()),
                 new Money(rateDocument.price())
         )).collect(Collectors.toUnmodifiableSet());

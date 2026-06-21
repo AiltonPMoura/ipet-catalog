@@ -1,6 +1,6 @@
-package br.com.ipet.catalog.infrastructure.persistence.offering.stay.daycare;
+package br.com.ipet.catalog.infrastructure.persistence.offering.daycare;
 
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCare;
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class DayCarePersistenceMapper {
         return dayCareDocument;
     }
 
-    private Set<RateDocument> toRateDocuments(Set<Rate> rates) {
+    private Set<RateDocument> toRateDocuments(Set<RateService> rates) {
         return rates.stream()
                 .map(rate -> new RateDocument(
                         rate.size().name(),

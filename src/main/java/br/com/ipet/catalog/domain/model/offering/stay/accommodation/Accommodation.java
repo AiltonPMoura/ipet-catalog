@@ -5,7 +5,7 @@ import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.DuplicatePetSizeException;
 import br.com.ipet.catalog.domain.model.offering.PetSize;
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceCategory;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
@@ -27,11 +27,11 @@ public class Accommodation extends ServiceOffering
         implements Stay, AggregateRoot<ServiceOffereingId> {
 
     private CheckInOutTime checkInOutTime;
-    private Set<Rate> rates;
+    private Set<RateService> rates;
 
     @Builder(builderClassName = "CreateNewAccommodationServiceBuilder", builderMethodName = "createNew")
     static Accommodation create(CompanyId companyId, ServiceType type, Species species,
-                                CheckInOutTime checkInOutTime, Set<Rate> rates) {
+                                CheckInOutTime checkInOutTime, Set<RateService> rates) {
 
         validateCategory(type);
         validateCheckIn(checkInOutTime.checkInTime());
@@ -63,7 +63,7 @@ public class Accommodation extends ServiceOffering
             throw new MinimumStayDurationException("Duração mínima de 18 horas não atingida");
     }
 
-    private static void validateUniqueRates(Set<Rate> rates) {
+    private static void validateUniqueRates(Set<RateService> rates) {
         var petSizes = new HashSet<PetSize>();
 
         for (var rate : rates)
@@ -73,7 +73,7 @@ public class Accommodation extends ServiceOffering
 
     @Builder(builderClassName = "ExistingAccommodationServiceBuilder", builderMethodName = "existing")
     private Accommodation(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                          CheckInOutTime checkInOutTime, Set<Rate> rates, OffsetDateTime registerAt) {
+                          CheckInOutTime checkInOutTime, Set<RateService> rates, OffsetDateTime registerAt) {
         super(id, companyId, type, species, registerAt);
         this.setCheckinOutTime(checkInOutTime);
         this.setRates(rates);
@@ -89,11 +89,11 @@ public class Accommodation extends ServiceOffering
     }
 
     @Override
-    public Set<Rate> rates() {
-        return Collections.unmodifiableSet(new HashSet<>(rates));
+    public Set<RateService> rates() {
+        return Collections.unmodifiableSet(rates);
     }
 
-    private void setRates(Set<Rate> rates) {
+    private void setRates(Set<RateService> rates) {
         FieldValidator.requiresNonEmpty("rates", rates);
         this.rates = rates;
     }

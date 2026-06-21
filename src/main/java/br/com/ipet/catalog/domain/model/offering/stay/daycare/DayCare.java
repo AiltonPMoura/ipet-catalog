@@ -5,7 +5,7 @@ import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.offering.DuplicatePetSizeException;
 import br.com.ipet.catalog.domain.model.offering.PetSize;
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceCategory;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
@@ -17,7 +17,6 @@ import br.com.ipet.catalog.domain.model.offering.stay.accommodation.InvalidCheck
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.InvalidCheckOutTimeException;
 import br.com.ipet.catalog.domain.model.offering.stay.MinimumStayDurationException;
 import br.com.ipet.catalog.domain.model.offering.stay.Stay;
-import lombok.AccessLevel;
 import lombok.Builder;
 
 import java.time.Duration;
@@ -31,11 +30,11 @@ public class DayCare extends ServiceOffering
         implements Stay, AggregateRoot<ServiceOffereingId> {
 
     private CheckInOutTime checkInOutTime;
-    private Set<Rate> rates;
+    private Set<RateService> rates;
 
     @Builder(builderClassName = "CreateNewDayCareServiceBuilder", builderMethodName = "createNew")
     private static DayCare create(CompanyId companyId, ServiceType type, Species species,
-                                  CheckInOutTime checkInOutTime, Set<Rate> rates) {
+                                  CheckInOutTime checkInOutTime, Set<RateService> rates) {
 
         validateCategory(type);
         validateCheckIn(checkInOutTime.checkInTime());
@@ -66,7 +65,7 @@ public class DayCare extends ServiceOffering
             throw new MinimumStayDurationException("");
     }
 
-    private static void validateUniqueRates(Set<Rate> rates) {
+    private static void validateUniqueRates(Set<RateService> rates) {
         var petSizes = new HashSet<PetSize>();
 
         for (var rate : rates)
@@ -76,7 +75,7 @@ public class DayCare extends ServiceOffering
 
     @Builder(builderClassName = "ExistingDayCareServiceBuilder", builderMethodName = "existing")
     private DayCare(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                    CheckInOutTime checkInOutTime, Set<Rate> rates, OffsetDateTime registerAt) {
+                    CheckInOutTime checkInOutTime, Set<RateService> rates, OffsetDateTime registerAt) {
         super(id, companyId, type, species, registerAt);
         this.setCheckinOutTime(checkInOutTime);
         this.setRates(rates);
@@ -92,11 +91,11 @@ public class DayCare extends ServiceOffering
     }
 
     @Override
-    public Set<Rate> rates() {
+    public Set<RateService> rates() {
         return Collections.unmodifiableSet(rates);
     }
 
-    private void setRates(Set<Rate> rates) {
+    private void setRates(Set<RateService> rates) {
         FieldValidator.requiresNonEmpty("rates", rates);
         this.rates = rates;
     }
