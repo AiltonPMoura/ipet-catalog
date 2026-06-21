@@ -6,7 +6,7 @@ import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
-import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOutTime;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOut;
 import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCare;
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
 import org.springframework.stereotype.Component;
@@ -22,9 +22,9 @@ public class DayCareMapper {
                 .id(new ServiceOffereingId(dayCareDocument.getId()))
                 .type(ServiceType.valueOf(dayCareDocument.getType()))
                 .species(Species.valueOf(dayCareDocument.getSpecies()))
-                .checkInOutTime(new CheckInOutTime(dayCareDocument.getCheckIn(), dayCareDocument.getCheckOut()))
+                .registeredAt(dayCareDocument.getRegisteredAt())
+                .checkInOut(new CheckInOut(dayCareDocument.getCheckIn(), dayCareDocument.getCheckOut()))
                 .rates(this.toRates(dayCareDocument.getRates()))
-                .registerAt(dayCareDocument.getRegisterAt())
                 .build();
     }
 

@@ -34,7 +34,7 @@ public class ServiceOfferingDocument extends AbstractAggregateRoot<ServiceOfferi
     private String type;
     private String species;
 
-    private OffsetDateTime registerAt;
+    private OffsetDateTime registeredAt;
 
     @CreatedBy
     private UUID createdByUserId;

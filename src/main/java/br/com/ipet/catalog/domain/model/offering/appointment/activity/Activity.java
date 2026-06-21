@@ -3,10 +3,10 @@ package br.com.ipet.catalog.domain.model.offering.appointment.activity;
 import br.com.ipet.catalog.domain.model.AggregateRoot;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceCategory;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
-import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
 import br.com.ipet.catalog.domain.model.offering.UnsupportedServiceCategoryException;
@@ -21,16 +21,16 @@ public class Activity extends ServiceOffering
         implements Appointment, AggregateRoot<ServiceOffereingId> {
 
     private DurationTime duration;
-    private RateService rateService;
+    private RateService rate;
 
     @Builder(builderClassName = "CreateNewActivityServiceBuilder", builderMethodName = "createNew")
     static Activity create(CompanyId companyId, ServiceType type, Species species,
-                           DurationTime duration, RateService rateService) {
+                           DurationTime duration, RateService rate) {
 
         validateCategory(type);
         validateMaximumDuration(type, duration.value());
 
-        return new Activity(new ServiceOffereingId(), companyId, type, species, duration, rateService, OffsetDateTime.now());
+        return new Activity(new ServiceOffereingId(), companyId, type, species, duration, rate, OffsetDateTime.now());
     }
 
     private static void validateCategory(ServiceType type) {
@@ -50,20 +50,20 @@ public class Activity extends ServiceOffering
 
     @Builder(builderClassName = "ExistingActivityServiceBuilder", builderMethodName = "existing")
     private Activity(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                     DurationTime duration, RateService rateService, OffsetDateTime createdAt) {
-        super(id, companyId, type, species, createdAt);
+                     DurationTime duration, RateService rate, OffsetDateTime registeredAt) {
+        super(id, companyId, type, species, registeredAt);
         this.setDuration(duration);
-        this.setRateService(rateService);
+        this.setRate(rate);
     }
 
     @Override
     public RateService rate() {
-        return rateService;
+        return rate;
     }
 
-    private void setRateService(RateService rateService) {
-        FieldValidator.requiresNonNull("rate", rateService);
-        this.rateService = rateService;
+    private void setRate(RateService rate) {
+        FieldValidator.requiresNonNull("rate", rate);
+        this.rate = rate;
     }
 
     public DurationTime duration() {

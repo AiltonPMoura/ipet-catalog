@@ -7,7 +7,7 @@ import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accommodation;
-import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOutTime;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOut;
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +22,8 @@ public class AccommodationMapper {
                 .id(new ServiceOffereingId(accommodationDocument.getId()))
                 .type(ServiceType.valueOf(accommodationDocument.getType()))
                 .species(Species.valueOf(accommodationDocument.getSpecies()))
-                .registerAt(accommodationDocument.getRegisterAt())
-                .checkInOutTime(new CheckInOutTime(accommodationDocument.getCheckIn(), accommodationDocument.getCheckOut()))
+                .registeredAt(accommodationDocument.getRegisteredAt())
+                .checkInOut(new CheckInOut(accommodationDocument.getCheckIn(), accommodationDocument.getCheckOut()))
                 .rates(this.toRates(accommodationDocument.getRates()))
                 .build();
     }

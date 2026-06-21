@@ -1,14 +1,15 @@
-package br.com.ipet.catalog.application.offering.management.stay;
+package br.com.ipet.catalog.application.offering.management;
 
+import br.com.ipet.catalog.application.commons.RateData;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
 import br.com.ipet.catalog.domain.model.commons.valueobject.Money;
 import br.com.ipet.catalog.domain.model.offering.PetSize;
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.Accomodations;
-import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOutTime;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOut;
 import br.com.ipet.catalog.domain.model.offering.stay.daycare.DayCares;
 import br.com.ipet.catalog.domain.model.offering.stay.StayRegistrationService;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +29,15 @@ public class StayManagementApplicationService {
     private DayCares dayCares;
     private Accomodations accomodations;
 
-    public UUID createDayCare(StayInput input) {
+    public UUID createDayCare(UUID companyId, StayInput input) {
+        FieldValidator.requiresNonNull("companyId", companyId);
         FieldValidator.requiresNonNull("input", input);
 
         var dayCare = this.stayRegistrationService.registerDayCare(
-                new CompanyId(input.companyId()),
+                new CompanyId(companyId),
                 ServiceType.valueOf(input.serviceType()),
                 Species.valueOf(input.species()),
-                new CheckInOutTime(input.checkin(), input.checkout()),
+                new CheckInOut(input.checkin(), input.checkout()),
                 toRates(input.rates())
         );
 
@@ -44,14 +46,15 @@ public class StayManagementApplicationService {
         return dayCare.id().value();
     }
 
-    public UUID createAccomodation(StayInput input) {
+    public UUID createAccomodation(UUID companyId, StayInput input) {
+        FieldValidator.requiresNonNull("companyId", companyId);
         FieldValidator.requiresNonNull("input", input);
 
         var accommodation = this.stayRegistrationService.registerAccommodation(
-                new CompanyId(input.companyId()),
+                new CompanyId(companyId),
                 ServiceType.valueOf(input.serviceType()),
                 Species.valueOf(input.species()),
-                new CheckInOutTime(input.checkin(), input.checkout()),
+                new CheckInOut(input.checkin(), input.checkout()),
                 toRates(input.rates())
         );
 
@@ -60,9 +63,9 @@ public class StayManagementApplicationService {
         return accommodation.id().value();
     }
 
-    private Set<Rate> toRates(Set<RateData> rates) {
+    private Set<RateService> toRates(Set<RateData> rates) {
         return rates.stream()
-                .map(rate -> new Rate(
+                .map(rate -> new RateService(
                         PetSize.valueOf(rate.petSize()),
                         new Money(rate.price())
                 )).collect(Collectors.toSet());

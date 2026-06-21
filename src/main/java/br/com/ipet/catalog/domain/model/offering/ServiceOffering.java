@@ -13,17 +13,17 @@ public abstract class ServiceOffering extends AbstractEventSourceEntity {
     private CompanyId companyId;
     private ServiceType type;
     private Species species;
-    private OffsetDateTime registerAt;
+    private OffsetDateTime registeredAt;
 
     protected ServiceOffering(ServiceOffereingId id, CompanyId companyId,
-                              ServiceType type, Species species, OffsetDateTime registerAt) {
+                              ServiceType type, Species species, OffsetDateTime registeredAt) {
         validateSpecies(type, species);
 
         this.setId(id);
         this.setCompanyId(companyId);
         this.setType(type);
         this.setSpecies(species);
-        this.setRegisterAt(OffsetDateTime.now());
+        this.setRegisteredAt(registeredAt);
     }
 
     private static void validateSpecies(ServiceType type, Species species) {
@@ -67,13 +67,13 @@ public abstract class ServiceOffering extends AbstractEventSourceEntity {
         this.species = species;
     }
 
-    public OffsetDateTime registerAt() {
-        return registerAt;
+    public OffsetDateTime registeredAt() {
+        return registeredAt;
     }
 
-    private void setRegisterAt(OffsetDateTime registerAt) {
-        FieldValidator.requiresNonNull("registerAt", registerAt);
-        this.registerAt = registerAt;
+    private void setRegisteredAt(OffsetDateTime registeredAt) {
+        FieldValidator.requiresNonNull("registeredAt", registeredAt);
+        this.registeredAt = registeredAt;
     }
 
     @Override

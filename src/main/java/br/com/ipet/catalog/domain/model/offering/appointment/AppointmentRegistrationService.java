@@ -2,7 +2,7 @@ package br.com.ipet.catalog.domain.model.offering.appointment;
 
 
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
 import br.com.ipet.catalog.domain.model.offering.appointment.activity.Activities;
@@ -23,13 +23,13 @@ public class AppointmentRegistrationService {
     private final Activities activities;
 
     public Health registerHealth(CompanyId companyId, ServiceType serviceType, Species species,
-                                 DurationTime duration, Rate rate) {
+                                 DurationTime duration, RateService rateService) {
 
         if (higienes.existsOfCompany(companyId) || activities.existsOfCompany(companyId)) {
             throw new AppointmentAlreadyException("The company already has a service registered");
         }
 
-        var hasPetSize = healths.ofCompany(companyId).stream().anyMatch(health -> health.rate().size().equals(rate.size()));
+        var hasPetSize = healths.ofCompany(companyId).stream().anyMatch(health -> health.rate().size().equals(rateService.size()));
         if (hasPetSize) {
             throw new AppointmentAlreadyException("The company already has service registered");
         }
@@ -39,18 +39,18 @@ public class AppointmentRegistrationService {
                 .type(serviceType)
                 .species(species)
                 .duration(duration)
-                .rate(rate)
+                .rate(rateService)
                 .build();
     }
 
     public Hygiene registerHygiene(CompanyId companyId, ServiceType serviceType, Species species,
-                                   DurationTime duration, Rate rate) {
+                                   DurationTime duration, RateService rateService) {
 
         if (healths.existsOfCompany(companyId) || activities.existsOfCompany(companyId)) {
             throw new AppointmentAlreadyException("The company already has a service registered");
         }
 
-        var hasPetSize = higienes.ofCompany(companyId).stream().anyMatch(hygiene -> hygiene.rate().size().equals(rate.size()));
+        var hasPetSize = higienes.ofCompany(companyId).stream().anyMatch(hygiene -> hygiene.rate().size().equals(rateService.size()));
         if (hasPetSize) {
             throw new AppointmentAlreadyException("The company already has service registered");
         }
@@ -60,18 +60,18 @@ public class AppointmentRegistrationService {
                 .type(serviceType)
                 .species(species)
                 .duration(duration)
-                .rate(rate)
+                .rate(rateService)
                 .build();
     }
 
     public Activity registerActivity(CompanyId companyId, ServiceType serviceType, Species species,
-                                     DurationTime duration, Rate rate) {
+                                     DurationTime duration, RateService rateService) {
 
         if (healths.existsOfCompany(companyId) || higienes.existsOfCompany(companyId)) {
             throw new AppointmentAlreadyException("The company already has a service registered");
         }
 
-        var hasPetSize = activities.ofCompany(companyId).stream().anyMatch(activity -> activity.rate().size().equals(rate.size()));
+        var hasPetSize = activities.ofCompany(companyId).stream().anyMatch(activity -> activity.rate().size().equals(rateService.size()));
         if (hasPetSize) {
             throw new AppointmentAlreadyException("The company already has service registered");
         }
@@ -81,7 +81,7 @@ public class AppointmentRegistrationService {
                 .type(serviceType)
                 .species(species)
                 .duration(duration)
-                .rate(rate)
+                .rate(rateService)
                 .build();
     }
 

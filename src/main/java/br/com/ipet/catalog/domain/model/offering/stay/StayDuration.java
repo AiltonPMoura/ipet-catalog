@@ -4,12 +4,12 @@ import br.com.ipet.catalog.domain.model.FieldValidator;
 
 import java.time.OffsetDateTime;
 
-public record StayDuration(OffsetDateTime checkIn,
-                           OffsetDateTime checkOut) {
+public record StayDuration(OffsetDateTime checkin,
+                           OffsetDateTime checkout) {
 
     public StayDuration {
-        FieldValidator.requiresNonNull("checkInTime", checkIn);
-        FieldValidator.requiresNonNull("checkOutTime", checkOut);
-        FieldValidator.requireStartDateTimeIsBeforeEndTime(checkIn, checkOut);
+        FieldValidator.requiresNonNull("checkin", checkin);
+        FieldValidator.requiresNonNull("checkout", checkout);
+        FieldValidator.requireStartDateTimeIsBeforeEndTime(checkin, checkout);
     }
 }

@@ -26,20 +26,20 @@ import java.util.Set;
 public class Accommodation extends ServiceOffering
         implements Stay, AggregateRoot<ServiceOffereingId> {
 
-    private CheckInOutTime checkInOutTime;
+    private CheckInOut checkInOut;
     private Set<RateService> rates;
 
     @Builder(builderClassName = "CreateNewAccommodationServiceBuilder", builderMethodName = "createNew")
     static Accommodation create(CompanyId companyId, ServiceType type, Species species,
-                                CheckInOutTime checkInOutTime, Set<RateService> rates) {
+                                CheckInOut checkInOut, Set<RateService> rates) {
 
         validateCategory(type);
-        validateCheckIn(checkInOutTime.checkInTime());
-        validateCheckOut(checkInOutTime.checkOutTime());
-        validateMinimumDuration(checkInOutTime.checkInTime(), checkInOutTime.checkOutTime());
+        validateCheckIn(checkInOut.checkin());
+        validateCheckOut(checkInOut.checkout());
+        validateMinimumDuration(checkInOut.checkin(), checkInOut.checkout());
         validateUniqueRates(rates);
 
-        return new Accommodation(new ServiceOffereingId(), companyId, type, species, checkInOutTime, rates, OffsetDateTime.now());
+        return new Accommodation(new ServiceOffereingId(), companyId, type, species, checkInOut, rates, OffsetDateTime.now());
     }
 
     private static void validateCategory(ServiceType type) {
@@ -73,19 +73,19 @@ public class Accommodation extends ServiceOffering
 
     @Builder(builderClassName = "ExistingAccommodationServiceBuilder", builderMethodName = "existing")
     private Accommodation(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                          CheckInOutTime checkInOutTime, Set<RateService> rates, OffsetDateTime registerAt) {
-        super(id, companyId, type, species, registerAt);
-        this.setCheckinOutTime(checkInOutTime);
+                          CheckInOut checkInOut, Set<RateService> rates, OffsetDateTime registeredAt) {
+        super(id, companyId, type, species, registeredAt);
+        this.setCheckinOut(checkInOut);
         this.setRates(rates);
     }
 
-    public CheckInOutTime checkInOutTime() {
-        return checkInOutTime;
+    public CheckInOut checkInOut() {
+        return checkInOut;
     }
 
-    private void setCheckinOutTime(CheckInOutTime checkInOutTime) {
-        FieldValidator.requiresNonNull("checkInOutTime", checkInOutTime);
-        this.checkInOutTime = checkInOutTime;
+    private void setCheckinOut(CheckInOut checkInOut) {
+        FieldValidator.requiresNonNull("checkInOutTime", checkInOut);
+        this.checkInOut = checkInOut;
     }
 
     @Override

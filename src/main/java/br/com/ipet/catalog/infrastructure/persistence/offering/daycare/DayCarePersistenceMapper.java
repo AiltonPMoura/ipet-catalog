@@ -20,10 +20,10 @@ public class DayCarePersistenceMapper {
         dayCareDocument.setCompanyId(dayCare.companyId().value());
         dayCareDocument.setType(dayCare.type().name());
         dayCareDocument.setSpecies(dayCare.species().name());
-        dayCareDocument.setCheckIn(dayCare.checkInOutTime().checkInTime());
-        dayCareDocument.setCheckOut(dayCare.checkInOutTime().checkOutTime());
+        dayCareDocument.setRegisteredAt(dayCare.registeredAt());
+        dayCareDocument.setCheckIn(dayCare.checkInOut().checkin());
+        dayCareDocument.setCheckOut(dayCare.checkInOut().checkout());
         dayCareDocument.setRates(this.toRateDocuments(dayCare.rates()));
-        dayCareDocument.setRegisterAt(dayCare.registerAt());
         return dayCareDocument;
     }
 

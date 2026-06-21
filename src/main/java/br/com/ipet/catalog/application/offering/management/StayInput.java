@@ -1,11 +1,11 @@
-package br.com.ipet.catalog.application.offering.management.stay;
+package br.com.ipet.catalog.application.offering.management;
+
+import br.com.ipet.catalog.application.commons.RateData;
 
 import java.time.LocalTime;
 import java.util.Set;
-import java.util.UUID;
 
-public record StayInput (UUID companyId,
-                         String species,
+public record StayInput (String species,
                          String serviceType,
                          LocalTime checkin,
                          LocalTime checkout,

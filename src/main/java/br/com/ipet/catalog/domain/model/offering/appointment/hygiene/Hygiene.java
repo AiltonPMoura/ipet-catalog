@@ -7,7 +7,7 @@ import br.com.ipet.catalog.domain.model.offering.PetSize;
 import br.com.ipet.catalog.domain.model.offering.ServiceCategory;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
 import br.com.ipet.catalog.domain.model.offering.UnsupportedServiceCategoryException;
@@ -22,11 +22,11 @@ public class Hygiene extends ServiceOffering
         implements Appointment, AggregateRoot<ServiceOffereingId> {
 
     private DurationTime duration;
-    private Rate rate;
+    private RateService rate;
 
     @Builder(builderClassName = "CreateNewHygieneServiceBuilder", builderMethodName = "createNew")
     static Hygiene create(CompanyId companyId, ServiceType type, Species species,
-                          DurationTime duration, Rate rate) {
+                          DurationTime duration, RateService rate) {
 
         validateCategory(type);
         validateMaximumDuration(type, rate.size(), duration.value());
@@ -55,18 +55,18 @@ public class Hygiene extends ServiceOffering
 
     @Builder(builderClassName = "ExistingHygieneServiceBuilder", builderMethodName = "existing")
     private Hygiene(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                    DurationTime duration, Rate rate, OffsetDateTime createdAt) {
-        super(id, companyId, type, species, createdAt);
+                    DurationTime duration, RateService rate, OffsetDateTime registeredAt) {
+        super(id, companyId, type, species, registeredAt);
         this.setDuration(duration);
         this.setRate(rate);
     }
 
     @Override
-    public Rate rate() {
+    public RateService rate() {
         return rate;
     }
 
-    private void setRate(Rate rate) {
+    private void setRate(RateService rate) {
         FieldValidator.requiresNonNull("rate", rate);
         this.rate = rate;
     }

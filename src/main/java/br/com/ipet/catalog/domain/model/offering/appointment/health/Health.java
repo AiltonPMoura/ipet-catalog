@@ -3,7 +3,7 @@ package br.com.ipet.catalog.domain.model.offering.appointment.health;
 import br.com.ipet.catalog.domain.model.AggregateRoot;
 import br.com.ipet.catalog.domain.model.FieldValidator;
 import br.com.ipet.catalog.domain.model.commons.valueobject.CompanyId;
-import br.com.ipet.catalog.domain.model.offering.Rate;
+import br.com.ipet.catalog.domain.model.offering.RateService;
 import br.com.ipet.catalog.domain.model.offering.ServiceCategory;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffereingId;
 import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
@@ -21,11 +21,11 @@ public class Health extends ServiceOffering
         implements Appointment, AggregateRoot<ServiceOffereingId> {
 
     private DurationTime duration;
-    private Rate rate;
+    private RateService rate;
 
     @Builder(builderClassName = "CreateNewHealthServiceBuilder", builderMethodName = "createNew")
     static Health create(CompanyId companyId, ServiceType type, Species species,
-                         DurationTime duration, Rate rate) {
+                         DurationTime duration, RateService rate) {
 
         validateCategory(type);
         validateMaximumDuration(duration.value());
@@ -45,18 +45,18 @@ public class Health extends ServiceOffering
 
     @Builder(builderClassName = "ExistingHealthServiceBuilder", builderMethodName = "existing")
     private Health(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                   DurationTime duration, Rate rate, OffsetDateTime registerAt) {
-        super(id, companyId, type, species, registerAt);
+                   DurationTime duration, RateService rate, OffsetDateTime registeredAt) {
+        super(id, companyId, type, species, registeredAt);
         this.setRate(rate);
         this.setDuration(duration);
     }
 
     @Override
-    public Rate rate() {
+    public RateService rate() {
         return rate;
     }
 
-    private void setRate(Rate rate) {
+    private void setRate(RateService rate) {
         FieldValidator.requiresNonNull("rate", rate);
         this.rate = rate;
     }

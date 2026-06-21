@@ -12,7 +12,7 @@ import br.com.ipet.catalog.domain.model.offering.ServiceOffering;
 import br.com.ipet.catalog.domain.model.offering.ServiceType;
 import br.com.ipet.catalog.domain.model.offering.Species;
 import br.com.ipet.catalog.domain.model.offering.UnsupportedServiceCategoryException;
-import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOutTime;
+import br.com.ipet.catalog.domain.model.offering.stay.accommodation.CheckInOut;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.InvalidCheckInTimeException;
 import br.com.ipet.catalog.domain.model.offering.stay.accommodation.InvalidCheckOutTimeException;
 import br.com.ipet.catalog.domain.model.offering.stay.MinimumStayDurationException;
@@ -29,20 +29,20 @@ import java.util.Set;
 public class DayCare extends ServiceOffering
         implements Stay, AggregateRoot<ServiceOffereingId> {
 
-    private CheckInOutTime checkInOutTime;
+    private CheckInOut checkInOut;
     private Set<RateService> rates;
 
     @Builder(builderClassName = "CreateNewDayCareServiceBuilder", builderMethodName = "createNew")
     private static DayCare create(CompanyId companyId, ServiceType type, Species species,
-                                  CheckInOutTime checkInOutTime, Set<RateService> rates) {
+                                  CheckInOut checkInOut, Set<RateService> rates) {
 
         validateCategory(type);
-        validateCheckIn(checkInOutTime.checkInTime());
-        validateCheckOut(checkInOutTime.checkOutTime());
-        validateMinimumDuration(checkInOutTime.checkInTime(), checkInOutTime.checkOutTime());
+        validateCheckIn(checkInOut.checkin());
+        validateCheckOut(checkInOut.checkout());
+        validateMinimumDuration(checkInOut.checkin(), checkInOut.checkout());
         validateUniqueRates(rates);
 
-        return new DayCare(new ServiceOffereingId(), companyId, type, species, checkInOutTime, rates, OffsetDateTime.now());
+        return new DayCare(new ServiceOffereingId(), companyId, type, species, checkInOut, rates, OffsetDateTime.now());
     }
 
     private static void validateCategory(ServiceType type) {
@@ -75,19 +75,19 @@ public class DayCare extends ServiceOffering
 
     @Builder(builderClassName = "ExistingDayCareServiceBuilder", builderMethodName = "existing")
     private DayCare(ServiceOffereingId id, CompanyId companyId, ServiceType type, Species species,
-                    CheckInOutTime checkInOutTime, Set<RateService> rates, OffsetDateTime registerAt) {
-        super(id, companyId, type, species, registerAt);
-        this.setCheckinOutTime(checkInOutTime);
+                    CheckInOut checkInOut, Set<RateService> rates, OffsetDateTime registeredAt) {
+        super(id, companyId, type, species, registeredAt);
+        this.setCheckinOut(checkInOut);
         this.setRates(rates);
     }
 
-    public CheckInOutTime checkInOutTime() {
-        return checkInOutTime;
+    public CheckInOut checkInOut() {
+        return checkInOut;
     }
 
-    private void setCheckinOutTime(CheckInOutTime checkInOutTime) {
-        FieldValidator.requiresNonNull("checkInOut", checkInOutTime);
-        this.checkInOutTime = checkInOutTime;
+    private void setCheckinOut(CheckInOut checkInOut) {
+        FieldValidator.requiresNonNull("checkInOut", checkInOut);
+        this.checkInOut = checkInOut;
     }
 
     @Override

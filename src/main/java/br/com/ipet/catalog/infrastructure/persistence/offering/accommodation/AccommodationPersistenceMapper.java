@@ -20,9 +20,9 @@ public class AccommodationPersistenceMapper {
         accommodationDocument.setCompanyId(accommodation.companyId().value());
         accommodationDocument.setType(accommodation.type().name());
         accommodationDocument.setSpecies(accommodation.species().name());
-        accommodationDocument.setRegisterAt(accommodation.registerAt());
-        accommodationDocument.setCheckIn(accommodation.checkInOutTime().checkInTime());
-        accommodationDocument.setCheckOut(accommodation.checkInOutTime().checkOutTime());
+        accommodationDocument.setRegisteredAt(accommodation.registeredAt());
+        accommodationDocument.setCheckIn(accommodation.checkInOut().checkin());
+        accommodationDocument.setCheckOut(accommodation.checkInOut().checkout());
         accommodationDocument.setRates(this.toRateDocuments(accommodation.rates()));
         return accommodationDocument;
     }

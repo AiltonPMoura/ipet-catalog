@@ -7,14 +7,14 @@ import java.time.LocalTime;
 
 import static br.com.ipet.catalog.domain.model.FieldValidator.requiresNonNull;
 
-public record CheckInOutTime(LocalTime checkInTime, LocalTime checkOutTime) {
+public record CheckInOut(LocalTime checkin, LocalTime checkout) {
 
     private static final int STAY_INTERVAL_MINUTES = 60;
 
-    public CheckInOutTime {
-        requiresNonNull("checkInTime", checkInTime);
-        requiresNonNull("checkOutTime", checkOutTime);
-        verifyValidInterval(checkInTime, checkOutTime);
+    public CheckInOut {
+        requiresNonNull("checkin", checkin);
+        requiresNonNull("checkout", checkout);
+        verifyValidInterval(checkin, checkout);
     }
 
     private void verifyValidInterval(LocalTime checkIn, LocalTime checkOut) {
