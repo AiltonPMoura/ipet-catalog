@@ -1,7 +1,7 @@
 package br.com.ipet.catalog.infrastructure.persistence.offering.health;
 
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
-import br.com.ipet.catalog.infrastructure.persistence.offering.ServiceOfferingDocument;
+import br.com.ipet.catalog.infrastructure.persistence.offering.AbstractServiceOfferingDocument;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HealthDocument extends ServiceOfferingDocument {
+public class HealthDocument extends AbstractServiceOfferingDocument {
 
     private int duration;
     private RateDocument rate;

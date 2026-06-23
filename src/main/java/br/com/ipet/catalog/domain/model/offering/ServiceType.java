@@ -6,7 +6,7 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 public enum ServiceType {
-    BATH("Higienização completa", ServiceCategory.HYGIENE, Set.of(Species.GOG, Species.CAT)),
+    BATH("Higienização completa", ServiceCategory.HYGIENE, Set.of(Species.GOG)),
     GROOMING_SCISSOR("Higienização completa e corte na tesoura", ServiceCategory.HYGIENE, Set.of(Species.GOG)),
     GROOMING_CLIPPERS("Higienização completa e corte com máquina", ServiceCategory.HYGIENE, Set.of(Species.GOG)),
 

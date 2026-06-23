@@ -23,7 +23,7 @@ public class DayCareMapper {
                 .type(ServiceType.valueOf(dayCareDocument.getType()))
                 .species(Species.valueOf(dayCareDocument.getSpecies()))
                 .registeredAt(dayCareDocument.getRegisteredAt())
-                .checkInOut(new CheckInOut(dayCareDocument.getCheckIn(), dayCareDocument.getCheckOut()))
+                .checkInOut(new CheckInOut(dayCareDocument.getCheckin(), dayCareDocument.getCheckout()))
                 .rates(this.toRates(dayCareDocument.getRates()))
                 .build();
     }

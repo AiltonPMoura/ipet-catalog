@@ -1,7 +1,7 @@
 package br.com.ipet.catalog.infrastructure.persistence.offering.accommodation;
 
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
-import br.com.ipet.catalog.infrastructure.persistence.offering.ServiceOfferingDocument;
+import br.com.ipet.catalog.infrastructure.persistence.offering.AbstractServiceOfferingDocument;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @TypeAlias("ACCOMMODATION")
-public class AccommodationDocument extends ServiceOfferingDocument {
+public class AccommodationDocument extends AbstractServiceOfferingDocument {
 
     private LocalTime checkIn;
     private LocalTime checkOut;

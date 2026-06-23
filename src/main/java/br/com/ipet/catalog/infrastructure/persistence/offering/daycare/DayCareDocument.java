@@ -1,7 +1,7 @@
 package br.com.ipet.catalog.infrastructure.persistence.offering.daycare;
 
 import br.com.ipet.catalog.infrastructure.persistence.commons.RateDocument;
-import br.com.ipet.catalog.infrastructure.persistence.offering.ServiceOfferingDocument;
+import br.com.ipet.catalog.infrastructure.persistence.offering.AbstractServiceOfferingDocument;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,10 +17,10 @@ import java.util.Set;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DayCareDocument extends ServiceOfferingDocument {
+public class DayCareDocument extends AbstractServiceOfferingDocument {
 
-    private LocalTime checkIn;
-    private LocalTime checkOut;
+    private LocalTime checkin;
+    private LocalTime checkout;
     private Set<RateDocument> rates = new HashSet<>();
 
 }

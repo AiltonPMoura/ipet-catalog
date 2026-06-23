@@ -1,7 +1,7 @@
-package br.com.ipet.catalog.presentation.offereing;
+package br.com.ipet.catalog.presentation.offering.hygiene;
 
 import br.com.ipet.catalog.application.commons.AppointmentInput;
-import br.com.ipet.catalog.application.offering.management.HealthManagementApplicationService;
+import br.com.ipet.catalog.application.offering.management.HygieneManagementApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,16 +14,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/companies/{companyId}/services/healths")
+@RequestMapping("/v1/companies/{companyId}/services/hygienes")
 @RequiredArgsConstructor
-public class HealthController {
+public class HygieneController {
 
-    private final HealthManagementApplicationService healthManagementApplicationService;
+    private final HygieneManagementApplicationService hygieneManagementApplicationService;
 
     @PostMapping
-    public ResponseEntity<Void> createHealth(@PathVariable UUID companyId,
-                                             @RequestBody AppointmentInput input) {
-        var serviceId = healthManagementApplicationService.create(companyId, input);
+    public ResponseEntity<Void> create(@PathVariable UUID companyId,
+                                       @RequestBody AppointmentInput input) {
+        var serviceId = hygieneManagementApplicationService.create(companyId, input);
 
         var uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/../{id}")

@@ -23,7 +23,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "service_offerings")
-public class ServiceOfferingDocument extends AbstractAggregateRoot<ServiceOfferingDocument> {
+public abstract class AbstractServiceOfferingDocument
+        extends AbstractAggregateRoot<AbstractServiceOfferingDocument> {
 
     @Id
     @EqualsAndHashCode.Include
@@ -33,7 +34,6 @@ public class ServiceOfferingDocument extends AbstractAggregateRoot<ServiceOfferi
     private UUID companyId;
     private String type;
     private String species;
-
     private OffsetDateTime registeredAt;
 
     @CreatedBy

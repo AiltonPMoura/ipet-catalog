@@ -21,8 +21,8 @@ public class DayCarePersistenceMapper {
         dayCareDocument.setType(dayCare.type().name());
         dayCareDocument.setSpecies(dayCare.species().name());
         dayCareDocument.setRegisteredAt(dayCare.registeredAt());
-        dayCareDocument.setCheckIn(dayCare.checkInOut().checkin());
-        dayCareDocument.setCheckOut(dayCare.checkInOut().checkout());
+        dayCareDocument.setCheckin(dayCare.checkInOut().checkin());
+        dayCareDocument.setCheckout(dayCare.checkInOut().checkout());
         dayCareDocument.setRates(this.toRateDocuments(dayCare.rates()));
         return dayCareDocument;
     }
